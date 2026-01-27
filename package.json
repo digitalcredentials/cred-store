@@ -1,0 +1,23 @@
+{
+  "name": "@digitalcredentials/cred-store",
+  "version": "1.0.0",
+  "description": "Relational implementation of a storage/log service for Verifiable Credentials",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node -r dotenv/config server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digitalcredentials/cred-store.git"
+  },
+  "author": "James Chartrand",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/digitalcredentials/cred-store/issues"
+  },
+  "homepage": "https://github.com/digitalcredentials/cred-store#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
