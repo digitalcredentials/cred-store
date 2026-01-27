@@ -1,12 +1,11 @@
 import { build } from './src/app.js'
-import { getConfig, setConfig } from './src/config.js'
 import https from 'https'
 import http from 'http'
 import fs from 'fs'
 
 const run = async () => {
-  await setConfig()
-  const { port, enableHttpsForDev } = getConfig()
+  const port = 3000;
+  const enableHttpsForDev = false;
 
   const app = await build()
 
