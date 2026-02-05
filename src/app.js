@@ -1,8 +1,18 @@
 import express from 'express'
 import cors from 'cors'
 import {createDatabase, seedDatabase} from './seed.js'
-import {fetchCredentials, fetchCredentialCount, addCredential, updateCredential, getCredential, getReportData, fetchBatches, fetchTemplates, fetchAllTemplates} from './queries.js'
-import pool from './pool.js'
+import {
+    fetchCredentials, 
+    fetchCredentialCount, 
+    addCredential, 
+    updateCredential, 
+    getCredential, 
+    getReportData, 
+    fetchBatches, 
+    fetchTemplates, 
+    fetchAllTemplates, 
+    fetchHolders
+} from './queries.js'
 
 export async function build() {
   var app = express()
@@ -54,6 +64,17 @@ export async function build() {
             throw err;
         }
     })
+
+    app.post('/holders/query', async function (req, res) {
+    let query = req.body;
+        try {
+            const result = await fetchHolders(query.queryTerm, query.currentPage);
+        res.json(result);
+        } catch (err) {
+            throw err;
+        }
+    })
+
 
     app.post('/credentials/count', async function (req, res) {
         let query = req.body;

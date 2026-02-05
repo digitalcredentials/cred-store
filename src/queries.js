@@ -48,6 +48,33 @@ export const fetchCredentials = async (queryTerm, currentPage) => {
     const count = await fetchCredentialCount(queryTerm)
     return {credentials,count}
 }
+  
+export const fetchHolders = async (queryTerm, currentPage) => {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+    const holders = await pool.query(`SELECT * FROM holder WHERE 
+        name LIKE '%${queryTerm}%' OR
+        did LIKE '%${queryTerm}%' OR
+        email LIKE '%${queryTerm}%' OR
+        org_id LIKE '%${queryTerm}%'
+        ORDER BY name DESC
+        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+        `);
+    const count = await fetchHolderCount(queryTerm)
+    return {holders,count}
+}
+
+
+export const fetchHolderCount = async (queryTerm) => {
+    const result = await pool.query(`SELECT COUNT(*) as count FROM holder
+        WHERE 
+        name LIKE '%${queryTerm}%' OR
+        did LIKE '%${queryTerm}%' OR
+        email LIKE '%${queryTerm}%' OR
+        org_id LIKE '%${queryTerm}%'
+        `);
+    const count = result[0].count.toString()
+    return count
+}
 
 export const fetchBatchesByQuery = async (queryTerm, currentPage = 1) => {
     const offset = (currentPage - 1) * ITEMS_PER_PAGE;
