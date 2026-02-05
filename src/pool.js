@@ -1,6 +1,6 @@
 import mariadb from 'mariadb';
 const pool = mariadb.createPool({
-    host: 'localhost', // Or your DB host
+    host: 'localhost',
     user: 'creduser',
     password: 'creduser',
     connectionLimit: 5,

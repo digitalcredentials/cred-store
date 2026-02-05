@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import {createDatabase, seedDatabase} from './seed.js'
+import {fetchCredentials, fetchCredentialCount, addCredential, updateCredential, getCredential, getReportData, fetchBatches, fetchTemplates, fetchAllTemplates} from './queries.js'
 import pool from './pool.js'
 
 export async function build() {
@@ -20,53 +21,110 @@ export async function build() {
         healthy: false
       })
     }
-    res.send({ message: 'cred-store server status: ok.', healthy: true })
+    res.json({ message: 'cred-store server status: ok.', healthy: true })
   })
 
   app.get('/', function (req, res) {
-    res.send({ message: 'cred-store server status: ok.' })
+    res.json({ message: 'cred-store server status: ok.' })
   })
 
   app.get('/seed', async function (req, res) {
     await createDatabase()
     await seedDatabase()
 
-    res.send({ message: 'created and seeded db' })
+    res.json({ message: 'created and seeded db' })
   })
 
   app.post('/credential', async function (req, res) {
     let submittedCred = req.body;
     try {
-        const result = await pool.query("insert into credentials (cred_name, holder, email) values (?,?,?)", ['test cred', 'me', 'chartraj@mit.edu']);
-        res.send(result);
+        const result = await addCredential(submittedCred)
+        res.json(result);
     } catch (err) {
         throw err;
     }
   })
 
-  app.get('/credentials', async function (req, res) {
+  app.post('/credentials/query', async function (req, res) {
+    let query = req.body;
         try {
-        const result = await pool.query("select * from credentials");
-        res.send(result);
+            const result = await fetchCredentials(query.queryTerm, query.currentPage);
+        res.json(result);
         } catch (err) {
             throw err;
         }
     })
 
-  app.get('/credentials/:id', async function (req, res) {
-    const id = req.params.id
-    if (id === '0') {
-        res.send({ message: '0 test worked properly' })
-    } else {
+    app.post('/credentials/count', async function (req, res) {
+        let query = req.body;
         try {
-        const result = await pool.query("select * from credentials where id = ?", [id]);
+            const result = await fetchCredentialCount(query.queryTerm);
+        res.json(result);
+        } catch (err) {
+            throw err;
+        }
+    })
+
+  app.get('/credential/:id', async function (req, res) {
+
+    const id = req.params.id
+        try {
+            const result = await getCredential(id);
+            console.log("and the result: ", result)
+            res.send(result);
+        } catch (err) {
+            throw err;
+        }
+  })
+
+    app.put('/credential/:id', async function (req, res) {
+        const id = req.params.id
+        let updatedValues = req.body;
+        try {
+            const result = updateCredential(id, updatedValues);
         res.send(result);
         } catch (err) {
             throw err;
         }
-    }
-
   })
+
+
+  app.get('/report', async function (req, res) {
+        try {
+            const result = await getReportData();
+            res.send(result);
+        } catch (err) {
+            throw err;
+        }
+  })
+
+  app.get('/batches', async function (req, res) {
+        try {
+            const result = await fetchBatches(5);
+            res.send(result);
+        } catch (err) {
+            throw err;
+        }
+  })
+
+  app.get('/templates', async function (req, res) {
+        try {
+            const result = await fetchAllTemplates();
+            res.send(result);
+        } catch (err) {
+            throw err;
+        }
+  })
+
+    app.post('/templates/query', async function (req, res) {
+    let query = req.body;
+        try {
+            const result = await fetchTemplates(query.queryTerm);
+        res.json(result);
+        } catch (err) {
+            throw err;
+        }
+    })
 
 
 
