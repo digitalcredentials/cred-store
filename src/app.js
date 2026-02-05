@@ -11,7 +11,12 @@ import {
     fetchBatches, 
     fetchTemplates, 
     fetchAllTemplates, 
-    fetchHolders
+    fetchHolders,
+    fetchHolderCount,
+    getHolder,
+    addHolder,
+    updateHolder,
+
 } from './queries.js'
 
 export async function build() {
@@ -75,6 +80,36 @@ export async function build() {
         }
     })
 
+    app.post('/holder', async function (req, res) {
+    let submittedHolder = req.body;
+    try {
+        const result = await addHolder(submittedHolder)
+        res.json(result);
+    } catch (err) {
+        throw err;
+    }
+  })
+
+   app.get('/holder/:id', async function (req, res) {
+    const id = req.params.id
+        try {
+            const result = await getHolder(id);
+            res.send(result);
+        } catch (err) {
+            throw err;
+        }
+  })
+
+      app.put('/holder/:id', async function (req, res) {
+        const id = req.params.id
+        let updatedValues = req.body;
+        try {
+            const result = updateHolder(id, updatedValues);
+        res.send(result);
+        } catch (err) {
+            throw err;
+        }
+  })
 
     app.post('/credentials/count', async function (req, res) {
         let query = req.body;
@@ -86,12 +121,20 @@ export async function build() {
         }
     })
 
-  app.get('/credential/:id', async function (req, res) {
+    app.post('/holders/count', async function (req, res) {
+        let query = req.body;
+        try {
+            const result = await fetchHolderCount(query.queryTerm);
+        res.json(result);
+        } catch (err) {
+            throw err;
+        }
+    })
 
+  app.get('/credential/:id', async function (req, res) {
     const id = req.params.id
         try {
             const result = await getCredential(id);
-            console.log("and the result: ", result)
             res.send(result);
         } catch (err) {
             throw err;

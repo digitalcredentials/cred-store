@@ -48,6 +48,26 @@ export const fetchCredentials = async (queryTerm, currentPage) => {
     const count = await fetchCredentialCount(queryTerm)
     return {credentials,count}
 }
+
+export const getCredential = async id => {
+    const result = await pool.query(`${commonCredQuery} WHERE 
+     credential.id = ?`, [id]);
+    return result[0]
+}
+
+export const addCredential = async credential => {
+    const result = await pool.query(`insert into credential (cred_name, holder_name, holder_email, added_by) values (?,?,?,?)`, [credential.cred_name, credential.holder_name, credential.holder_email, credential.added_by]);
+     return result;
+}
+
+export const updateCredential = async (id, credential) => {
+    const result = await pool.query(`UPDATE credential
+        SET cred_name = ?, 
+        holder_name = ?,
+        holder_email = ?
+        WHERE id = ?`, [credential.cred_name, credential.holder_name, credential.holder_email, id]);
+    return result;
+}
   
 export const fetchHolders = async (queryTerm, currentPage) => {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -74,6 +94,26 @@ export const fetchHolderCount = async (queryTerm) => {
         `);
     const count = result[0].count.toString()
     return count
+}
+
+export const getHolder = async id => {
+    const result = await pool.query(`SELECT * FROM holder WHERE id = ?`, [id]);
+    return result[0]
+}
+
+export const addHolder = async holder => {
+    const result = await pool.query(`insert into holder (name, did, email, org_id) values (?,?,?,?)`, [holder.name, holder.did, holder.email, holder.org_id]);
+     return result;
+}
+
+export const updateHolder = async (id, holder) => {
+    const result = await pool.query(`UPDATE holder
+        SET name = ?, 
+        did = ?,
+        email = ?,
+        org_id = ?
+        WHERE id = ?`, [holder.name, holder.did, holder.email, holder.org_id, id]);
+    return result;
 }
 
 export const fetchBatchesByQuery = async (queryTerm, currentPage = 1) => {
@@ -136,41 +176,16 @@ export const getReportData = async () => {
         pool.query("SELECT COUNT(*) AS total_batches FROM batch"),
         pool.query("SELECT status, COUNT(*) AS count FROM credential GROUP BY status;"),
         pool.query("SELECT YEAR(date_added) AS year, MONTH(date_added) AS month, COUNT(*) AS count FROM credential GROUP BY year, month ORDER BY year, month;")
-
     ]);
-
     const totalCredentials = result[0][0].total_credentials.toString();
     const totalTemplates = result[1][0].total_templates.toString();
     const totalBatches = result[2][0].total_batches.toString();
-
     const byStatus = result[3].reduce(
         (accumulator, statusObject) => {accumulator[statusObject.status] = convertToNumber(statusObject.count); return accumulator},
-        {}
-    );
-
-//(row=>{row.count = row.count.toString(); return row})
-
+        {});
     const byMonth = result[4].map(row=>{row.count = convertToNumber(row.count); return row})
     return {totalCredentials, totalBatches, totalTemplates, byStatus, byMonth};
 }
 
-export const getCredential = async id => {
-    const result = await pool.query(`${commonCredQuery} WHERE 
-     credential.id = ?`, [id]);
-    return result[0]
-}
 
-export const addCredential = async credential => {
-    const result = await pool.query(`insert into credential (cred_name, holder_name, holder_email, added_by) values (?,?,?,?)`, [credential.cred_name, credential.holder_name, credential.holder_email, credential.added_by]);
-     return result;
-}
-
-export const updateCredential = async (id, credential) => {
-    const result = await pool.query(`UPDATE credential
-        SET cred_name = ?, 
-        holder_name = ?,
-        holder_email = ?
-        WHERE id = ?`, [credential.cred_name, credential.holder_name, credential.holder_email, id]);
-    return result;
-}
 
