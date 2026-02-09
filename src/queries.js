@@ -96,6 +96,44 @@ export const fetchHolderCount = async (queryTerm) => {
     return count
 }
 
+export const fetchCredentialsForHolder = async (orgId, queryTerm, currentPage) => {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  const theQuery = `${commonCredQuery} WHERE 
+        holder.org_id = '${orgId}' AND 
+        (
+        holder.name LIKE '%${queryTerm}%' OR
+        credential.cred_name LIKE '%${queryTerm}%' OR
+        holder.email LIKE '%${queryTerm}%' OR
+        credential.status LIKE '%${queryTerm}%'
+        )
+        ORDER BY credential.date_added DESC
+        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+        `
+        console.log("the query in get credentials for holder", theQuery)
+    const credentials = await pool.query(theQuery);
+    const count = await fetchCredentialCountForHolder(queryTerm)
+    return {credentials,count}
+}
+
+
+export const fetchCredentialCountForHolder = async (orgId, queryTerm) => {
+     const result = await pool.query(`SELECT COUNT(*) as count FROM credential
+        INNER JOIN holder ON credential.holder_id = holder.id
+        WHERE 
+        holder.org_id = '${orgId}' AND 
+        (
+        holder.name LIKE '%${queryTerm}%' OR
+        credential.cred_name LIKE '%${queryTerm}%' OR
+        holder.email LIKE '%${queryTerm}%' OR
+        credential.status LIKE '%${queryTerm}%'
+        )
+        `);
+    const count = result[0].count.toString()
+    return count
+}
+
+    
+
 export const getHolder = async id => {
     const result = await pool.query(`SELECT * FROM holder WHERE id = ?`, [id]);
     return result[0]

@@ -16,7 +16,8 @@ import {
     getHolder,
     addHolder,
     updateHolder,
-
+    fetchCredentialsForHolder,
+    fetchCredentialCountForHolder
 } from './queries.js'
 
 export async function build() {
@@ -64,6 +65,28 @@ export async function build() {
     let query = req.body;
         try {
             const result = await fetchCredentials(query.queryTerm, query.currentPage);
+        res.json(result);
+        } catch (err) {
+            throw err;
+        }
+    })
+
+    app.post('/holder/credentials/:id', async function (req, res) {
+        const id = req.params.id
+        let query = req.body;
+        try {
+            const result = await fetchCredentialsForHolder(id, query.queryTerm, query.currentPage);
+        res.json(result);
+        } catch (err) {
+            throw err;
+        }
+    })
+
+    app.post('/holder/credentials/count/:id', async function (req, res) {
+        const id = req.params.id
+        let query = req.body;
+        try {
+            const result = await fetchCredentialCountForHolder(id,query.queryTerm);
         res.json(result);
         } catch (err) {
             throw err;
