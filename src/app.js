@@ -55,7 +55,8 @@ export async function build() {
     let submittedCred = req.body;
     try {
         const result = await addCredential(submittedCred)
-        res.json(result);
+        console.log("result in app.js: ", result)
+        res.json({message: 'credential created'});
     } catch (err) {
         throw err;
     }
@@ -71,11 +72,10 @@ export async function build() {
         }
     })
 
-    app.post('/holder/credentials/:id', async function (req, res) {
+    app.get('/holder/credentials/:id', async function (req, res) {
         const id = req.params.id
-        let query = req.body;
         try {
-            const result = await fetchCredentialsForHolder(id, query.queryTerm, query.currentPage);
+            const result = await fetchCredentialsForHolder(id);
         res.json(result);
         } catch (err) {
             throw err;

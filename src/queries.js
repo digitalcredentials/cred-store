@@ -56,16 +56,15 @@ export const getCredential = async id => {
 }
 
 export const addCredential = async credential => {
-    const result = await pool.query(`insert into credential (cred_name, holder_name, holder_email, added_by) values (?,?,?,?)`, [credential.cred_name, credential.holder_name, credential.holder_email, credential.added_by]);
+    const result = await pool.query(`insert into credential (cred_name, holder_id, added_by) values (?,?,?)`, [credential.cred_name, credential.holder_id, credential.added_by]);
      return result;
 }
 
 export const updateCredential = async (id, credential) => {
     const result = await pool.query(`UPDATE credential
         SET cred_name = ?, 
-        holder_name = ?,
-        holder_email = ?
-        WHERE id = ?`, [credential.cred_name, credential.holder_name, credential.holder_email, id]);
+        holder_id = ?
+        WHERE id = ?`, [credential.cred_name, credential.holder_id, id]);
     return result;
 }
   
@@ -96,23 +95,14 @@ export const fetchHolderCount = async (queryTerm) => {
     return count
 }
 
-export const fetchCredentialsForHolder = async (orgId, queryTerm, currentPage) => {
-  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+export const fetchCredentialsForHolder = async (orgId) => {
+
   const theQuery = `${commonCredQuery} WHERE 
-        holder.org_id = '${orgId}' AND 
-        (
-        holder.name LIKE '%${queryTerm}%' OR
-        credential.cred_name LIKE '%${queryTerm}%' OR
-        holder.email LIKE '%${queryTerm}%' OR
-        credential.status LIKE '%${queryTerm}%'
-        )
+        holder.org_id = '${orgId}'
         ORDER BY credential.date_added DESC
-        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
         `
-        console.log("the query in get credentials for holder", theQuery)
     const credentials = await pool.query(theQuery);
-    const count = await fetchCredentialCountForHolder(queryTerm)
-    return {credentials,count}
+    return credentials
 }
 
 
