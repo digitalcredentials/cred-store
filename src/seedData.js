@@ -120,6 +120,7 @@ const credentials = [
     date_added: '2026-01-24 14:30:00'
   },
   {
+    id: 'CDEDCB59-39A0-43F7-A7A9-BE6BD30B1A46',
     category_id: categories[1].id,
     cred_name: "Master of Science",
     cred_template_id: templates[2].id,
