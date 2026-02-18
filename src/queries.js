@@ -26,8 +26,11 @@ export const fetchTemplates = async (queryTerm) => {
 
 const commonCredQuery = `SELECT 
         credential.id AS id,
+        holder.id as holder_id,
         holder.name as holder_name,
         holder.email as holder_email,
+        holder.did as holder_did,
+        holder.org_id as holder_org_id,
         credential.cred_name as cred_name,
         credential.status as status, 
         credential.date_added as date_added
@@ -52,7 +55,10 @@ export const fetchCredentials = async (queryTerm, currentPage) => {
 export const getCredential = async id => {
     const result = await pool.query(`${commonCredQuery} WHERE 
      credential.id = ?`, [id]);
-    return result[0]
+    const credential = result[0]
+    const holder = {id: credential.holder_id, name: credential.holder_name, did: credential.holder_did, org_id: credential.holder_org_id, email: credential.holder_email}
+     return {credential, holder}
+    
 }
 
 export const addCredential = async credential => {
