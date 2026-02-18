@@ -85,6 +85,28 @@ async function addTables(conn) {
         `)
 
         await conn.query(`
+            CREATE TABLE IF NOT EXISTS pickup (
+                id UUID NOT NULL DEFAULT UUID(),
+                credential_id UUID NOT NULL,
+                template_id UUID NOT NULL,
+                date_collected DATETIME,
+                pickup_token UUID NOT NULL,
+                PRIMARY KEY (id)
+            );
+        `)
+
+        await conn.query(`
+            CREATE TABLE IF NOT EXISTS notification (
+                id UUID NOT NULL DEFAULT UUID(),
+                credential_id UUID NOT NULL,
+                email VARCHAR(100) NOT NULL,
+                date_notifed DATETIME,
+                pickup_token UUID NOT NULL,
+                PRIMARY KEY (id)
+            );
+        `)
+
+        await conn.query(`
             CREATE TABLE IF NOT EXISTS holder (
                 id UUID NOT NULL DEFAULT UUID(),
                 name VARCHAR(100) NOT NULL,
