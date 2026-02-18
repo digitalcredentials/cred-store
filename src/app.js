@@ -17,7 +17,9 @@ import {
     addHolder,
     updateHolder,
     fetchCredentialsForHolder,
-    fetchCredentialCountForHolder
+    fetchCredentialCountForHolder,
+    addPickup,
+    addNotification
 } from './queries.js'
 
 export async function build() {
@@ -213,7 +215,26 @@ export async function build() {
         }
     })
 
+    app.post('/notification', async function (req, res) {
+    let submittedNotification = req.body;
+    try {
+        const result = await addNotification(submittedNotification)
+        console.log(result)
+        res.json(result);
+    } catch (err) {
+        throw err;
+    }
+  })
 
+  app.post('/pickup', async function (req, res) {
+    let submittedPickup = req.body;
+    try {
+        const result = await addPickup(submittedPickup)
+        res.json(result);
+    } catch (err) {
+        throw err;
+    }
+  })
 
   return app
 }
