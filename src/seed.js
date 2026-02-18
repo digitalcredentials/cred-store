@@ -89,7 +89,7 @@ async function addTables(conn) {
                 id UUID NOT NULL DEFAULT UUID(),
                 credential_id UUID NOT NULL,
                 template_id UUID NOT NULL,
-                date_collected DATETIME,
+                date_collected DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
                 pickup_token UUID NOT NULL,
                 PRIMARY KEY (id)
             );
@@ -100,8 +100,8 @@ async function addTables(conn) {
                 id UUID NOT NULL DEFAULT UUID(),
                 credential_id UUID NOT NULL,
                 email VARCHAR(100) NOT NULL,
-                date_notifed DATETIME,
-                pickup_token UUID NOT NULL,
+                date_notifed DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                pickup_token UUID NOT NULL DEFAULT UUID(),
                 PRIMARY KEY (id)
             );
         `)
