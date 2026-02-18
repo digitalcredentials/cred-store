@@ -150,6 +150,16 @@ export const updateHolder = async (id, holder) => {
     return result;
 }
 
+export const addPickup = async pickup => {
+    const result = await pool.query(`INSERT INTO pickup (credential_id, template_id, pickup_token) VALUES (?,?,?) RETURNING id`, [pickup.credential_id, pickup.template_id, pickup.pickup_token]);
+     return result[0];
+}
+
+export const addNotification = async notification => {
+    const result = await pool.query(`INSERT INTO notification (credential_id, email) VALUES (?,?) RETURNING pickup_token`, [notification.credential_id, notification.email]);
+    return result[0];
+}
+
 export const fetchBatchesByQuery = async (queryTerm, currentPage = 1) => {
     const offset = (currentPage - 1) * ITEMS_PER_PAGE;
     const batches = await pool.query(`SELECT id, name, description, added_by, date_added FROM batch WHERE 
