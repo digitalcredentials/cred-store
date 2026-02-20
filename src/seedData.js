@@ -122,7 +122,7 @@ const credentials = [
   {
     id: 'CDEDCB59-39A0-43F7-A7A9-BE6BD30B1A46',
     category_id: categories[1].id,
-    cred_name: "Master of Science",
+    cred_name: "Master of Scientific",
     cred_template_id: templates[2].id,
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
     added_by: 'someone@mit.edu',

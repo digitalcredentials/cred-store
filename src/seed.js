@@ -39,7 +39,7 @@ async function dropTables(conn) {
 
     try {
         console.log('Dropping all tables...');
-        await conn.query(`DROP TABLE IF EXISTS credential, category, batch, template, holder;`);
+        await conn.query(`DROP TABLE IF EXISTS credential, category, batch, template, holder, notification, pickup;`);
         console.log('All tables successfully dropped.');
     } catch (err) {
         console.error('Error trying to drop tables:', err);
@@ -99,6 +99,7 @@ async function addTables(conn) {
             CREATE TABLE IF NOT EXISTS notification (
                 id UUID NOT NULL DEFAULT UUID(),
                 credential_id UUID NOT NULL,
+                holder_id UUID NOT NULL,
                 email VARCHAR(100) NOT NULL,
                 date_notifed DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
                 pickup_token UUID NOT NULL DEFAULT UUID(),
