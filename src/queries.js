@@ -53,11 +53,24 @@ export const fetchCredentials = async (queryTerm, currentPage) => {
 }
 
 export const getCredential = async id => {
-    const result = await pool.query(`${commonCredQuery} WHERE 
-     credential.id = ?`, [id]);
+    console.log("the credential id: ", id)
+    const result = await pool.query(`${commonCredQuery} WHERE credential.id = ?`, [id]);
     const credential = result[0]
-    const holder = {id: credential.holder_id, name: credential.holder_name, did: credential.holder_did, org_id: credential.holder_org_id, email: credential.holder_email}
-     return {credential, holder}
+    console.log("the credential result: ", credential)
+    const holder = {
+        id: credential.holder_id, 
+        name: credential.holder_name, 
+        did: credential.holder_did, 
+        org_id: credential.holder_org_id, 
+        email: credential.holder_email
+    }
+    delete credential.holder_id
+    delete credential.holder_name
+    delete credential.holder_did
+    delete credential.holder_org_id
+    delete credential.holder_email
+     
+    return {credential, holder}
     
 }
 
@@ -101,10 +114,10 @@ export const fetchHolderCount = async (queryTerm) => {
     return count
 }
 
-export const fetchCredentialsForHolder = async (orgId) => {
+export const fetchCredentialsForHolder = async (holderId) => {
 
   const theQuery = `${commonCredQuery} WHERE 
-        holder.org_id = '${orgId}'
+        holder.id = '${holderId}'
         ORDER BY credential.date_added DESC
         `
     const credentials = await pool.query(theQuery);
@@ -155,8 +168,17 @@ export const addPickup = async pickup => {
      return result[0];
 }
 
+export const lookupPickupToken = async pickupToken => {
+    //we do the pickup lookup separately so that
+    //we can show a different message if the token is good, but there are no creds for the holder 
+    const tokenLookupResult = await pool.query(`SELECT * FROM notification WHERE pickup_token = ?`, [pickupToken]);
+    console.log("token lookup result: ", tokenLookupResult)
+    const holderId = tokenLookupResult[0].holder_id;
+    return fetchCredentialsForHolder(holderId)
+}
+
 export const addNotification = async notification => {
-    const result = await pool.query(`INSERT INTO notification (credential_id, email) VALUES (?,?) RETURNING pickup_token`, [notification.credential_id, notification.email]);
+    const result = await pool.query(`INSERT INTO notification (credential_id, email, holder_id) VALUES (?,?,?) RETURNING pickup_token`, [notification.credential_id, notification.email, notification.holder_id]);
     return result[0];
 }
 
