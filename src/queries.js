@@ -52,11 +52,16 @@ export const fetchCredentials = async (queryTerm, currentPage) => {
     return {credentials,count}
 }
 
+export const getTemplate = async id => {
+    const result = await pool.query(`${commonCredQuery} WHERE template.id = ?`, [id]);
+    const template = result[0]
+    return template
+}
+
 export const getCredential = async id => {
-    console.log("the credential id: ", id)
+  
     const result = await pool.query(`${commonCredQuery} WHERE credential.id = ?`, [id]);
     const credential = result[0]
-    console.log("the credential result: ", credential)
     const holder = {
         id: credential.holder_id, 
         name: credential.holder_name, 
