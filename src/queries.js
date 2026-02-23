@@ -33,7 +33,8 @@ const commonCredQuery = `SELECT
         holder.org_id as holder_org_id,
         credential.cred_name as cred_name,
         credential.status as status, 
-        credential.date_added as date_added
+        credential.date_added as date_added,
+        credential.cred_template_id
         FROM credential
         INNER JOIN holder ON credential.holder_id = holder.id
         `
@@ -80,15 +81,17 @@ export const getCredential = async id => {
 }
 
 export const addCredential = async credential => {
-    const result = await pool.query(`insert into credential (cred_name, holder_id, added_by) values (?,?,?)`, [credential.cred_name, credential.holder_id, credential.added_by]);
+    const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, added_by) values (?,?,?,?)`, [credential.cred_name, credential.holder_id, credential.cred_template_id, credential.added_by]);
      return result;
 }
 
 export const updateCredential = async (id, credential) => {
+    console.log("credential: ", credential)
     const result = await pool.query(`UPDATE credential
         SET cred_name = ?, 
-        holder_id = ?
-        WHERE id = ?`, [credential.cred_name, credential.holder_id, id]);
+        holder_id = ?,
+        cred_template_id = ?
+        WHERE id = ?`, [credential.cred_name, credential.holder_id, credential.cred_template_id, id]);
     return result;
 }
   
