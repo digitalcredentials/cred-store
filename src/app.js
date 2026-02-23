@@ -11,6 +11,7 @@ import {
     fetchBatches, 
     fetchTemplates, 
     fetchAllTemplates, 
+    getTemplate,
     fetchHolders,
     fetchHolderCount,
     getHolder,
@@ -79,6 +80,16 @@ export async function build() {
         const id = req.params.id
         try {
             const result = await fetchCredentialsForHolder(id);
+        res.json(result);
+        } catch (err) {
+            throw err;
+        }
+    })
+
+        app.get('/template/:id', async function (req, res) {
+        const id = req.params.id
+        try {
+            const result = await getTemplate(id);
         res.json(result);
         } catch (err) {
             throw err;
