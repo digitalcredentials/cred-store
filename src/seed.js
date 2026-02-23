@@ -2,13 +2,14 @@ import mariadb from 'mariadb';
 import pool from './pool.js';
 import { credentials, templates, batches, categories, holders } from './seedData.js';
 
-// Define connection parameters without specifying a 'database'
+// Define connection parameters without 
+// specifying a 'database' because we haven't got one yet
 const connectionConfig = {
     host: 'localhost',
     port: 3306, // Default MariaDB port
-    user: 'creduser', // User with CREATE privileges (e.g., 'root')
+    user: 'creduser', 
     password: 'creduser',
-    connectionLimit: 1 // A simple connection is enough for this task
+    connectionLimit: 1 
 };
 
 export async function createDatabase(dbName) {
