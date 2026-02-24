@@ -91,7 +91,8 @@ const credentials = [
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
     added_by: 'chartraj@mit.edu',
     status: 'collected',
-    date_added: '2026-01-24 14:30:00'
+    date_added: '2026-01-24 14:30:00',
+    tenant_name: 'testing'
   },
   {
     category_id: categories[0].id,
@@ -101,7 +102,8 @@ const credentials = [
     holder_email: 'chartraj@mit.edu',
     added_by: 'chartraj@mit.edu',
     status: 'collected',
-    date_added: '2026-01-24 14:30:00'
+    date_added: '2026-01-24 14:30:00',
+    tenant_name: 'testing'
   },
   {
     category_id: categories[1].id,
@@ -110,7 +112,8 @@ const credentials = [
     holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
     added_by: 'someone@mit.edu',
     status: 'notified',
-    date_added: '2026-01-24 14:30:00'
+    date_added: '2026-01-24 14:30:00',
+    tenant_name: 'testing'
   },
   {
     category_id: categories[1].id,
@@ -119,7 +122,8 @@ const credentials = [
     holder_id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
     added_by: 'someone@mit.edu',
     status: 'notified',
-    date_added: '2026-01-24 14:30:00'
+    date_added: '2026-01-24 14:30:00',
+    tenant_name: 'testing'
   },
   {
     id: 'CDEDCB59-39A0-43F7-A7A9-BE6BD30B1A46',
@@ -129,7 +133,8 @@ const credentials = [
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
     added_by: 'someone@mit.edu',
     status: 'notified',
-    date_added: '2025-12-24 14:30:00'
+    date_added: '2025-12-24 14:30:00',
+    tenant_name: 'testing'
   },
   {
     category_id: categories[0].id,
@@ -137,7 +142,8 @@ const credentials = [
     cred_template_id: templates[3].id,
      holder_id: '73BEFADD-0BA4-418E-9141-0DCDBDE98776',
     added_by: 'chartraj@mit.edu',
-    date_added: '2025-12-24 14:30:00'
+    date_added: '2025-12-24 14:30:00',
+    tenant_name: 'testing'
   },
   {
     category_id: categories[1].id,
@@ -145,7 +151,8 @@ const credentials = [
     cred_template_id: templates[0].id,
      holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
     added_by: 'someone@mit.edu',
-    date_added: '2025-12-24 14:30:00'
+    date_added: '2025-12-24 14:30:00',
+    tenant_name: 'testing'
   },
   {
     category_id: categories[0].id,
@@ -153,7 +160,8 @@ const credentials = [
     cred_template_id: templates[2].id,
     holder_id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
     added_by: 'chartraj@mit.edu',
-    date_added: '2025-08-24 14:30:00'
+    date_added: '2025-08-24 14:30:00',
+    tenant_name: 'testing'
   },
   {
     category_id: categories[1].id,
@@ -161,7 +169,8 @@ const credentials = [
     cred_template_id: templates[1].id,
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
     added_by: 'someone@mit.edu',
-    date_added: '2025-08-24 14:30:00'
+    date_added: '2025-08-24 14:30:00',
+    tenant_name: 'testing'
   },
   {
     category_id: categories[0].id,
@@ -169,7 +178,8 @@ const credentials = [
     cred_template_id: templates[3].id,
      holder_id: '73BEFADD-0BA4-418E-9141-0DCDBDE98776',
     added_by: 'chartraj@mit.edu',
-    date_added: '2025-08-24 14:30:00'
+    date_added: '2025-08-24 14:30:00',
+    tenant_name: 'test'
   },
   {
     category_id: categories[1].id,
@@ -177,7 +187,8 @@ const credentials = [
     cred_template_id: templates[3].id,
      holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
     added_by: 'someone@mit.edu',
-    date_added: '2025-08-24 14:30:00'
+    date_added: '2025-08-24 14:30:00',
+    tenant_name: 'testing'
   },
   {
     category_id: categories[0].id,
@@ -185,7 +196,8 @@ const credentials = [
     cred_template_id: templates[1].id,
     holder_id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
     added_by: 'chartraj@mit.edu',
-    date_added: '2025-08-24 14:30:00'
+    date_added: '2025-08-24 14:30:00',
+    tenant_name: 'test'
   },
   {
     category_id: categories[1].id,
@@ -193,7 +205,8 @@ const credentials = [
     cred_template_id: templates[0].id,
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
     added_by: 'someone@mit.edu',
-    date_added: '2025-08-24 14:30:00'
+    date_added: '2025-08-24 14:30:00',
+    tenant_name: 'testing'
   },
   {
     category_id: categories[0].id,
@@ -201,7 +214,8 @@ const credentials = [
     cred_template_id: templates[0].id,
      holder_id: '73BEFADD-0BA4-418E-9141-0DCDBDE98776',
     added_by: 'chartraj@mit.edu',
-    date_added: '2025-11-24 14:30:00'
+    date_added: '2025-11-24 14:30:00',
+    tenant_name: 'test'
   },
   {
     category_id: categories[1].id,
@@ -209,7 +223,8 @@ const credentials = [
     cred_template_id: templates[2].id,
      holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
     added_by: 'someone@mit.edu',
-    date_added: '2025-11-24 14:30:00'
+    date_added: '2025-11-24 14:30:00',
+    tenant_name: 'testing'
   },
   {
     category_id: categories[0].id,
@@ -217,7 +232,8 @@ const credentials = [
     cred_template_id: templates[2].id,
     holder_id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
     added_by: 'chartraj@mit.edu',
-    date_added: '2025-11-24 14:30:00'
+    date_added: '2025-11-24 14:30:00',
+    tenant_name: 'testing'
   },
   {
     category_id: categories[1].id,
@@ -225,7 +241,8 @@ const credentials = [
     cred_template_id: templates[0].id,
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
     added_by: 'someone@mit.edu',
-    date_added: '2025-11-24 14:30:00'
+    date_added: '2025-11-24 14:30:00',
+    tenant_name: 'test'
   }
 ];
 
