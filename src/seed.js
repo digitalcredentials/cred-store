@@ -59,6 +59,7 @@ async function addTables(conn) {
                 cred_name VARCHAR(100) NOT NULL,
                 verifiable_credential JSON,
                 batch_id UUID,
+                tenant_name VARCHAR(100) NOT NULL,
                 category_id UUID,
                 cred_template_id UUID,
                 email_template_id UUID,
