@@ -126,7 +126,7 @@ const credentials = [
     tenant_name: 'testing'
   },
   {
-    id: 'CDEDCB59-39A0-43F7-A7A9-BE6BD30B1A46',
+    id: 'cdedcb59-39a0-43f7-a7a9-be6bd30b1a46',
     category_id: categories[1].id,
     cred_name: "Master of Scientific",
     cred_template_id: templates[2].id,
