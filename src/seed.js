@@ -155,8 +155,8 @@ async function seedTables(conn) {
         // --- Insert Seed Data ---
         const insertedCredentials = await Promise.all(
             credentials.map(credential => conn.query(`
-                INSERT IGNORE INTO credential (cred_name, cred_template_id, holder_id, added_by, category_id, status, date_added)
-                VALUES ('${credential.cred_name}', '${credential.cred_template_id}', '${credential.holder_id}', '${credential.added_by}', '${credential.category_id}', '${credential.status ?? "pending"}', '${credential.date_added}')
+                INSERT IGNORE INTO credential (cred_name, cred_template_id, holder_id, added_by, category_id, status, date_added, tenant_name)
+                VALUES ('${credential.cred_name}', '${credential.cred_template_id}', '${credential.holder_id}', '${credential.added_by}', '${credential.category_id}', '${credential.status ?? "pending"}', '${credential.date_added}', '${credential.tenant_name}')
                 `)
             )
         )
