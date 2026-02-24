@@ -59,7 +59,6 @@ export async function build() {
     let submittedCred = req.body;
     try {
         const result = await addCredential(submittedCred)
-        console.log("result in app.js: ", result)
         res.json({message: 'credential created'});
     } catch (err) {
         throw err;
@@ -90,7 +89,7 @@ export async function build() {
         const id = req.params.id
         try {
             const result = await getTemplate(id);
-        res.json(result);
+            res.json(result);
         } catch (err) {
             throw err;
         }
@@ -231,7 +230,6 @@ export async function build() {
     let submittedNotification = req.body;
     try {
         const result = await addNotification(submittedNotification)
-        console.log(result)
         res.json(result);
     } catch (err) {
         throw err;
@@ -240,10 +238,8 @@ export async function build() {
 
   app.get('/notification/:pickuptoken', async function (req, res) {
     const pickupToken = req.params.pickuptoken
-    console.log("the pickup token: ", pickupToken)
     try {
         const result = await lookupPickupToken(pickupToken)
-        console.log(result)
         res.json(result);
     } catch (err) {
         throw err;
