@@ -54,7 +54,7 @@ export const fetchCredentials = async (queryTerm, currentPage) => {
 }
 
 export const getTemplate = async id => {
-    const result = await pool.query(`${commonCredQuery} WHERE template.id = ?`, [id]);
+    const result = await pool.query(`SELECT * FROM template WHERE id = ?`, [id]);
     const template = result[0]
     return template
 }
@@ -86,7 +86,6 @@ export const addCredential = async credential => {
 }
 
 export const updateCredential = async (id, credential) => {
-    console.log("credential: ", credential)
     const result = await pool.query(`UPDATE credential
         SET cred_name = ?, 
         holder_id = ?,
