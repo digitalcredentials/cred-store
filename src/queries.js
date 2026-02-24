@@ -35,7 +35,7 @@ const commonCredQuery = `SELECT
         credential.status as status, 
         credential.date_added as date_added,
         credential.cred_template_id,
-        credential.tenant_name,
+        credential.tenant_name
         FROM credential
         INNER JOIN holder ON credential.holder_id = holder.id
         `
