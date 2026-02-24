@@ -1,4 +1,6 @@
 
+import testVC from './vc-templates/test-vc.js'
+
 const categories = [
   {
     id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
@@ -53,28 +55,28 @@ const holders = [
 const templates = [
   {
     id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
-    template_json: `{"vc": "will go here", "paths": "paths to replace might go here"}`,
+    template_json: testVC,
     name: 'Bachelor of Engineering',
     description: 'Standard Bachelor of Engineering',
     image_url: '/customers/evil-rabbit.png',
   },
   {
     id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
-    template_json: `{"vc": "will go here", "paths": "paths to replace might go here"}`,
+    template_json: testVC,
     name: 'Bachelor of Science',
     description: 'Standard Bachelor of Science',
     image_url: '/customers/evil-rabbit.png',
   },
   {
     id: 'CC27C14A-0ACF-4F4A-A6C9-D45682C144B9',
-    template_json: `{"vc": "will go here", "paths": "paths to replace might go here"}`,
+    template_json: testVC,
     name: 'Bachelor of Arts',
     description: 'Standard Bachelor of Arts',
     image_url: '/customers/evil-rabbit.png',
   },
   {
     id: '13D07535-C59E-4157-A011-F8D2EF4E0CBB',
-    template_json: `{"vc": "will go here", "paths": "paths to replace might go here"}`,
+    template_json: testVC,
     name: 'Master of Science',
     description: 'Standard Master of Science',
     image_url: '/customers/evil-rabbit.png',

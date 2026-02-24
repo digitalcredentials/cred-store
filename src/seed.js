@@ -176,6 +176,14 @@ async function seedTables(conn) {
             )
         )
 
+         const insertedTemplates = await Promise.all(
+            templates.map(template => conn.query(`
+                INSERT IGNORE INTO template (id, name, description, template_json, image_url)
+                VALUES ('${template.id}', '${template.name}', '${template.description}', '${template.template_json}', '${template.image_url}')
+                `)
+            )
+        )
+
         const insertedCategories = await Promise.all(
             categories.map(category => conn.query(`
                 INSERT IGNORE INTO category (id, name, description)
@@ -183,14 +191,7 @@ async function seedTables(conn) {
                 `)
             )
         )
-
-        const insertedTemplates = await Promise.all(
-            templates.map(template => conn.query(`
-                INSERT IGNORE INTO template (id, name, description, template_json, image_url)
-                VALUES ('${template.id}', '${template.name}', '${template.description}', '${template.template_json}', '${template.image_url}')
-                `)
-            )
-        )
+       
 
       console.log('Credentials seeded!');
 
