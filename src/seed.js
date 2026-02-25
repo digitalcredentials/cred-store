@@ -40,7 +40,7 @@ async function dropTables(conn) {
 
     try {
         console.log('Dropping all tables...');
-        await conn.query(`DROP TABLE IF EXISTS credential, category, batch, template, holder, notification, pickup;`);
+        await conn.query(`DROP TABLE IF EXISTS credential, category, batch, template, holder, notification, pickup, tenant;`);
         console.log('All tables successfully dropped.');
     } catch (err) {
         console.error('Error trying to drop tables:', err);
@@ -121,6 +121,20 @@ async function addTables(conn) {
         `)
 
          await conn.query(`
+            CREATE TABLE IF NOT EXISTS tenant (
+                id UUID NOT NULL DEFAULT UUID(),
+                name VARCHAR(100) NOT NULL,
+                description VARCHAR(255),
+                email VARCHAR(100) NOT NULL,
+                issuer_name VARCHAR(100) NOT NULL,
+                issuer_image_url VARCHAR(300) NOT NULL,
+                issuer_url VARCHAR(300) NOT NULL,
+                env_name VARCHAR(100) NOT NULL,
+                PRIMARY KEY (id)
+            );
+        `)
+
+         await conn.query(`
             CREATE TABLE IF NOT EXISTS batch (
                 id UUID NOT NULL DEFAULT UUID(),
                 name VARCHAR(100) NOT NULL,
@@ -173,6 +187,14 @@ async function seedTables(conn) {
             holders.map(holder => conn.query(`
                 INSERT IGNORE INTO holder (id, name, email, org_id, did)
                 VALUES ('${holder.id}','${holder.name}', '${holder.email}', '${holder.org_id}', ${holder.did ? "'" + holder.did + "'" : 'NULL'})
+                `)
+            )
+        )
+
+         const insertedTenants = await Promise.all(
+            holders.map(tenant => conn.query(`
+                INSERT IGNORE INTO tenant (id, name, description, email, issuer_name, issuer_url, issuer_image_url, env_name )
+                VALUES ('${tenant.id}','${tenant.name}', '${tenant.description}', '${tenant.email}', '${tenant.issuer_name}', '${tenant.issuer_url}', '${tenant.issuer_image_url}', '${tenant.env_name}' )
                 `)
             )
         )
