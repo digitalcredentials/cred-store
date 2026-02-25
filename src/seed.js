@@ -1,6 +1,6 @@
 import mariadb from 'mariadb';
 import pool from './pool.js';
-import { credentials, templates, batches, categories, holders } from './seedData.js';
+import { credentials, templates, batches, categories, holders, tenants } from './seedData.js';
 
 // Define connection parameters without 
 // specifying a 'database' because we haven't got one yet
@@ -192,7 +192,7 @@ async function seedTables(conn) {
         )
 
          const insertedTenants = await Promise.all(
-            holders.map(tenant => conn.query(`
+            tenants.map(tenant => conn.query(`
                 INSERT IGNORE INTO tenant (id, name, description, email, issuer_name, issuer_url, issuer_image_url, env_name )
                 VALUES ('${tenant.id}','${tenant.name}', '${tenant.description}', '${tenant.email}', '${tenant.issuer_name}', '${tenant.issuer_url}', '${tenant.issuer_image_url}', '${tenant.env_name}' )
                 `)
