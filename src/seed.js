@@ -59,7 +59,7 @@ async function addTables(conn) {
                 cred_name VARCHAR(100) NOT NULL,
                 verifiable_credential JSON,
                 batch_id UUID,
-                tenant_name VARCHAR(100) NOT NULL,
+                tenant_id UUID NOT NULL,
                 category_id UUID,
                 cred_template_id UUID,
                 email_template_id UUID,
@@ -169,8 +169,8 @@ async function seedTables(conn) {
         // --- Insert Seed Data ---
         const insertedCredentials = await Promise.all(
             credentials.map(credential => conn.query(`
-                INSERT IGNORE INTO credential (cred_name, cred_template_id, holder_id, added_by, category_id, status, date_added, tenant_name)
-                VALUES ('${credential.cred_name}', '${credential.cred_template_id}', '${credential.holder_id}', '${credential.added_by}', '${credential.category_id}', '${credential.status ?? "pending"}', '${credential.date_added}', '${credential.tenant_name}')
+                INSERT IGNORE INTO credential (cred_name, cred_template_id, holder_id, added_by, category_id, status, date_added, tenant_id)
+                VALUES ('${credential.cred_name}', '${credential.cred_template_id}', '${credential.holder_id}', '${credential.added_by}', '${credential.category_id}', '${credential.status ?? "pending"}', '${credential.date_added}', '${credential.tenant_id}')
                 `)
             )
         )
