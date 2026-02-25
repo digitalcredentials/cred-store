@@ -8,8 +8,12 @@ export const fetchBatches = async (limit) => {
     return await pool.query(`select id, name, description, added_by, date_added from batch${limit?' LIMIT ' + limit:''}`);
 }
 
-export const fetchAllTemplates = async (query) => {
+export const fetchAllTemplates = async () => {
     return await pool.query(`select * from template`);
+}
+
+export const fetchAllTenants = async () => {
+    return await pool.query(`select * from tenant`);
 }
 
 const ITEMS_PER_PAGE = 6;
