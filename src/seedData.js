@@ -51,6 +51,58 @@ const holders = [
   }
 ];
 
+const tenants = [
+  {
+    id: '2366E51E-10D1-4EFD-9200-FCCD2A0452E8',
+    name: 'Economics Department',
+    email: 'jc.chartrand@gmail.com',
+    desciption: 'Economics Department Signer',
+    env_name: 'UN_PROTECTED_TEST',
+    issuer_name: 'Wonderful U - Department of Economics',
+    issuer_url: 'https://econ.wonderfulu.edu',
+    issuer_image_url: 'https://digitalcredentials.github.io/badge-assets/classroom.png'
+  },
+  {
+    id: '4A46FCEA-9634-43CB-ABD5-B293997FBFFF',
+    name: 'Chemistry Department',
+    email: 'jc.chartrand@gmail.com',
+    desciption: 'Chemistry Department Signer',
+    env_name: 'PROTECTED_TEST',
+    issuer_name: 'Wonderful U - Department of Che istry',
+    issuer_url: 'https://chem.wonderfulu.edu',
+    issuer_image_url: 'https://digitalcredentials.github.io/badge-assets/classroom.png'
+  },
+  {
+    id: '262F661C-4A25-4279-8474-0EB302D714BD',
+    name: 'Continuing Education',
+    email: 'jc.chartrand@gmail.com',
+    desciption: 'Continuing Education Signer',
+    env_name: 'RANDOMING_TESTING',
+    issuer_name: 'Wonderful U - Continuing Education',
+    issuer_url: 'https://con-ed.wonderfulu.edu',
+    issuer_image_url: 'https://digitalcredentials.github.io/badge-assets/classroom.png'
+  },
+  {
+    id: 'DAF9A925-B98D-4FA1-9008-0800FECB4FF1',
+    name: 'Registrar',
+    email: 'jc.chartrand@gmail.com',
+    desciption: 'For signing miscellaneous registrarial documents,',
+    env_name: 'TEST',
+    issuer_name: 'Wonderful U - Registrar',
+    issuer_url: 'https://registrar.wonderfulu.edu',
+    issuer_image_url: 'https://digitalcredentials.github.io/badge-assets/classroom.png'
+  },
+  {
+    id: '90A5CC2F-660F-47B6-918F-FA7064961CC8',
+    name: 'Human Resources',
+    email: 'jc.chartrand@gmail.com',
+    desciption: 'For signing records of employment.',
+    env_name: 'TESTING',
+    issuer_name: 'Wonderful U - Human Resources',
+    issuer_url: 'https://hr.wonderfulu.edu',
+    issuer_image_url: 'https://digitalcredentials.github.io/badge-assets/classroom.png'
+  }
+];
 
 const templates = [
   {
@@ -92,7 +144,7 @@ const credentials = [
     added_by: 'chartraj@mit.edu',
     status: 'collected',
     date_added: '2026-01-24 14:30:00',
-    tenant_name: 'testing'
+    tenant_name: 'test'
   },
   {
     category_id: categories[0].id,
@@ -103,7 +155,7 @@ const credentials = [
     added_by: 'chartraj@mit.edu',
     status: 'collected',
     date_added: '2026-01-24 14:30:00',
-    tenant_name: 'testing'
+    tenant_name: 'test'
   },
   {
     category_id: categories[1].id,
@@ -113,7 +165,7 @@ const credentials = [
     added_by: 'someone@mit.edu',
     status: 'notified',
     date_added: '2026-01-24 14:30:00',
-    tenant_name: 'testing'
+    tenant_name: 'test'
   },
   {
     category_id: categories[1].id,
@@ -123,7 +175,7 @@ const credentials = [
     added_by: 'someone@mit.edu',
     status: 'notified',
     date_added: '2026-01-24 14:30:00',
-    tenant_name: 'testing'
+    tenant_name: 'test'
   },
   {
     id: 'cdedcb59-39a0-43f7-a7a9-be6bd30b1a46',
@@ -134,7 +186,7 @@ const credentials = [
     added_by: 'someone@mit.edu',
     status: 'notified',
     date_added: '2025-12-24 14:30:00',
-    tenant_name: 'testing'
+    tenant_name: 'test'
   },
   {
     category_id: categories[0].id,
@@ -143,7 +195,7 @@ const credentials = [
      holder_id: '73BEFADD-0BA4-418E-9141-0DCDBDE98776',
     added_by: 'chartraj@mit.edu',
     date_added: '2025-12-24 14:30:00',
-    tenant_name: 'testing'
+    tenant_name: 'test'
   },
   {
     category_id: categories[1].id,
@@ -152,7 +204,7 @@ const credentials = [
      holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
     added_by: 'someone@mit.edu',
     date_added: '2025-12-24 14:30:00',
-    tenant_name: 'testing'
+    tenant_name: 'test'
   },
   {
     category_id: categories[0].id,
@@ -161,7 +213,7 @@ const credentials = [
     holder_id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
     added_by: 'chartraj@mit.edu',
     date_added: '2025-08-24 14:30:00',
-    tenant_name: 'testing'
+    tenant_name: 'test'
   },
   {
     category_id: categories[1].id,
@@ -170,7 +222,7 @@ const credentials = [
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
     added_by: 'someone@mit.edu',
     date_added: '2025-08-24 14:30:00',
-    tenant_name: 'testing'
+    tenant_name: 'test'
   },
   {
     category_id: categories[0].id,
@@ -188,7 +240,7 @@ const credentials = [
      holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
     added_by: 'someone@mit.edu',
     date_added: '2025-08-24 14:30:00',
-    tenant_name: 'testing'
+    tenant_name: 'test'
   },
   {
     category_id: categories[0].id,
@@ -206,7 +258,7 @@ const credentials = [
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
     added_by: 'someone@mit.edu',
     date_added: '2025-08-24 14:30:00',
-    tenant_name: 'testing'
+    tenant_name: 'test'
   },
   {
     category_id: categories[0].id,
@@ -224,7 +276,7 @@ const credentials = [
      holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
     added_by: 'someone@mit.edu',
     date_added: '2025-11-24 14:30:00',
-    tenant_name: 'testing'
+    tenant_name: 'test'
   },
   {
     category_id: categories[0].id,
@@ -233,7 +285,7 @@ const credentials = [
     holder_id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
     added_by: 'chartraj@mit.edu',
     date_added: '2025-11-24 14:30:00',
-    tenant_name: 'testing'
+    tenant_name: 'test'
   },
   {
     category_id: categories[1].id,
