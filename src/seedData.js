@@ -304,4 +304,4 @@ const batches = [
   { name: 'Fall2025', description: '1st batch for fall convocation', uploaded_csv: 'csv data', added_by: 'chartraj@mit.edu' }
 ];
 
-export { credentials, batches, categories, templates, holders };
+export { credentials, batches, categories, templates, holders, tenants };
