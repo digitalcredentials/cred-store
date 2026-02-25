@@ -21,7 +21,8 @@ import {
     fetchCredentialCountForHolder,
     addPickup,
     addNotification,
-    lookupPickupToken
+    lookupPickupToken,
+    fetchAllTenants
 } from './queries.js'
 
 export async function build() {
@@ -210,6 +211,15 @@ export async function build() {
   app.get('/templates', async function (req, res) {
         try {
             const result = await fetchAllTemplates();
+            res.send(result);
+        } catch (err) {
+            throw err;
+        }
+  })
+
+  app.get('/tenants', async function (req, res) {
+        try {
+            const result = await fetchAllTenants();
             res.send(result);
         } catch (err) {
             throw err;
