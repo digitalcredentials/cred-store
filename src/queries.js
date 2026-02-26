@@ -39,9 +39,20 @@ const commonCredQuery = `SELECT
         credential.status as status, 
         credential.date_added as date_added,
         credential.cred_template_id,
-        credential.tenant_id
+        tenant.id as tenant_id,
+        tenant.env_name as tenant_env_name,
+        tenant.issuer_name as tenant_issuer_name,
+        tenant.issuer_image_url as tenant_issuer_image_url,
+        tenant.issuer_url as tenant_issuer_url,
+        template.id as template_id,
+        template.template_json as template_json,
+        template.name as template_name,
+        template.description as template_description,
+        template.image_url as template_image_url
         FROM credential
         INNER JOIN holder ON credential.holder_id = holder.id
+        INNER JOIN tenant ON credential.tenant_id = tenant.id
+        INNER JOIN template ON credential.cred_template_id = template.id
         `
 
 export const fetchCredentials = async (queryTerm, currentPage) => {
@@ -68,6 +79,7 @@ export const getCredential = async id => {
   
     const result = await pool.query(`${commonCredQuery} WHERE credential.id = ?`, [id]);
     const credential = result[0]
+    console.log("thge result: ", result)
     const holder = {
         id: credential.holder_id, 
         name: credential.holder_name, 
@@ -75,13 +87,43 @@ export const getCredential = async id => {
         org_id: credential.holder_org_id, 
         email: credential.holder_email
     }
+
+    const tenant = {
+        id: credential.tenant_id,
+        issuer_name: credential.tenant_issuer_name,
+        issuer_url: credential.tenant_issuer_url,
+        issuer_image_url: credential.tenant_issuer_image_url,
+        env_name: credential.tenant_env_name
+    }
+
+    const template = {
+        id: credential.template_id,
+        template_json: credential.template_json,
+        name: credential.template_name,
+        description: credential.template_description,
+        image_url: credential.template_image_url
+    }
+
     delete credential.holder_id
     delete credential.holder_name
     delete credential.holder_did
     delete credential.holder_org_id
     delete credential.holder_email
-     
-    return {credential, holder}
+    
+    delete credential.tenant_id
+    delete credential.tenant_issuer_name
+    delete credential.tenant_issuer_url
+    delete credential.tenant_issuer_image_url
+    delete credential.tenant_env_name
+
+    delete credential.template_id
+    delete credential.template_name
+    delete credential.template_description
+    delete credential.template_image_url
+    delete credential.template_json
+
+
+    return {credential, holder, tenant, template}
     
 }
 
