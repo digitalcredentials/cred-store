@@ -79,7 +79,6 @@ export const getCredential = async id => {
   
     const result = await pool.query(`${commonCredQuery} WHERE credential.id = ?`, [id]);
     const credential = result[0]
-    console.log("thge result: ", result)
     const holder = {
         id: credential.holder_id, 
         name: credential.holder_name, 
