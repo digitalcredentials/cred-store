@@ -120,6 +120,7 @@ export const getCredential = async id => {
     delete credential.template_description
     delete credential.template_image_url
     delete credential.template_json
+    delete credential.cred_template_id
 
 
     return {credential, holder, tenant, template}
