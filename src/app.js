@@ -22,7 +22,8 @@ import {
     addPickup,
     addNotification,
     lookupPickupToken,
-    fetchAllTenants
+    fetchAllTenants,
+    addBatch
 } from './queries.js'
 
 export async function build() {
@@ -61,6 +62,16 @@ export async function build() {
     try {
         const result = await addCredential(submittedCred)
         res.json({message: 'credential created'});
+    } catch (err) {
+        throw err;
+    }
+  })
+
+  app.post('/batch', async function (req, res) {
+    let submittedBatch = req.body;
+    try {
+        const result = await addBatch(submittedBatch)
+        res.json({message: 'batch added'});
     } catch (err) {
         throw err;
     }
