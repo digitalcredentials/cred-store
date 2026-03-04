@@ -127,6 +127,39 @@ export const getCredential = async id => {
     
 }
 
+export const addBatch = async batch => {
+   let conn;
+  try {
+    conn = await pool.getConnection();
+    await conn.beginTransaction();
+   
+    await addHolders(conn, batch.holders);
+    await addCredentials(conn, batch.credentials);
+    
+    await conn.commit();
+     console.log("Transaction successful!");
+    
+  } catch (err) {
+    if (conn) await conn.rollback();
+    console.error("Transaction failed:", err);
+    throw err; 
+  } finally {
+    if (conn) return conn.release();
+  }
+}
+
+export const addHolders = async holders => {
+    const queryValues = holders.map(holder=>`${holder.name},${holder.did},${holder.email},${holder.org_id},`).join(',')
+    const result = await pool.query(`insert into holder (name, did, email, org_id) values ${queryValues}`);
+    return result;
+}
+
+export const addCredentials = async credentials => {
+    const queryValues = credentials.map(credential=>`${credential.cred_name},${credential.holder_id},${credential.cred_template_id},${credential.tenant_id},${credential.added_by}`).join(',')
+    const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, added_by) values  ${queryValues}`);
+     return result;
+}
+
 export const addCredential = async credential => {
     const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, added_by) values (?,?,?,?,?)`, [credential.cred_name, credential.holder_id, credential.cred_template_id, credential.tenant_id, credential.added_by]);
      return result;
