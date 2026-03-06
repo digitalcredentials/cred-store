@@ -113,7 +113,7 @@ async function addTables(conn) {
             CREATE TABLE IF NOT EXISTS holder (
                 id UUID NOT NULL DEFAULT UUID(),
                 name VARCHAR(100) NOT NULL,
-                email VARCHAR(100),
+                email VARCHAR(100) NOT NULL UNIQUE,
                 org_id VARCHAR(100),
                 did VARCHAR(255),
                 PRIMARY KEY (id)
