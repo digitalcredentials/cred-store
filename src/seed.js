@@ -140,6 +140,7 @@ async function addTables(conn) {
                 name VARCHAR(100) NOT NULL,
                 uploaded_csv BLOB,
                 description VARCHAR(255),
+                template_id UUID NOT NULL,
                 date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
                 added_by VARCHAR(100),
                 PRIMARY KEY (id)
