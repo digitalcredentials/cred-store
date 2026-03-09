@@ -19,6 +19,7 @@ import {
     updateHolder,
     fetchCredentialsForHolder,
     fetchCredentialCountForHolder,
+    checkForHolderDuplicates,
     addPickup,
     addNotification,
     lookupPickupToken,
@@ -152,11 +153,22 @@ export async function build() {
         const id = req.params.id
         let updatedValues = req.body;
         try {
-            const result = updateHolder(id, updatedValues);
-        res.send(result);
+            const result = await updateHolder(id, updatedValues);
+            res.send(result);
         } catch (err) {
             throw err;
         }
+  })
+
+  app.post('/holders/duplicates', async function (req, res) {
+        const emailList = req.body;
+        try {
+            const result = await checkForHolderDuplicates(emailList);
+            res.json(result)
+        } catch (e) {
+            throw e
+        }
+
   })
 
     app.post('/credentials/count', async function (req, res) {
