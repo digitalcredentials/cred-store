@@ -148,14 +148,23 @@ export const addBatch = async batch => {
   }
 }
 
-export const addHolders = async holders => {
-    const queryValues = holders.map(holder=>`${holder.name},${holder.did},${holder.email},${holder.org_id},`).join(',')
-    const result = await pool.query(`insert into holder (name, did, email, org_id) values ${queryValues}`);
+export const checkForHolderDuplicates = async emailList => {
+    const emailsAsStrings = emailList.map(email=>`'${email}'`).join(',')
+    const query = `SELECT * FROM holder WHERE email IN (${emailsAsStrings})`;
+    const result = await pool.query(query);
+    return result
+}
+
+export const addHolders = async data => {
+    const added_by = data.added_by
+    const queryValues = data.holders.map(holder=>`(${holder.name},${holder.did},${holder.email},${holder.org_id}, ${added_by})`).join(',')
+    const result = await pool.query(`insert into holder (name, did, email, org_id, added_by) values ${queryValues}`);
     return result;
 }
 
 export const addCredentials = async credentials => {
-    const queryValues = credentials.map(credential=>`${credential.cred_name},${credential.holder_id},${credential.cred_template_id},${credential.tenant_id},${credential.added_by}`).join(',')
+     // TODO, this is a batch so will need to add the batch info, ie., batch description (category???), templateId, csv file.
+    const queryValues = credentials.map(credential=>`(${credential.cred_name},${credential.holder_id},${credential.cred_template_id},${credential.tenant_id},${credential.added_by})`).join(',')
     const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, added_by) values  ${queryValues}`);
      return result;
 }
