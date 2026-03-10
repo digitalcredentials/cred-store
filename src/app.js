@@ -134,7 +134,7 @@ export async function build() {
     let submittedHolder = req.body;
     try {
         const result = await addHolder(submittedHolder)
-        res.json(result);
+        res.json({success:true});
     } catch (err) {
         throw err;
     }
@@ -144,7 +144,7 @@ export async function build() {
     let holders = req.body;
     try {
         const result = await addHolders(holders)
-        res.json(result);
+        res.json({success:true});
     } catch (err) {
         throw err;
     }
@@ -165,7 +165,7 @@ export async function build() {
         let updatedValues = req.body;
         try {
             const result = await updateHolder(id, updatedValues);
-            res.send(result);
+            res.json({success:true});
         } catch (err) {
             throw err;
         }
