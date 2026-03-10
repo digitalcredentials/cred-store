@@ -116,6 +116,8 @@ async function addTables(conn) {
                 email VARCHAR(100) NOT NULL UNIQUE,
                 org_id VARCHAR(100),
                 did VARCHAR(255),
+                added_by VARCHAR(100) NOT NULL,
+                updated_by VARCHAR(100),
                 PRIMARY KEY (id)
             );
         `)
@@ -186,8 +188,8 @@ async function seedTables(conn) {
 
         const insertedHolder = await Promise.all(
             holders.map(holder => conn.query(`
-                INSERT IGNORE INTO holder (id, name, email, org_id, did)
-                VALUES ('${holder.id}','${holder.name}', '${holder.email}', '${holder.org_id}', ${holder.did ? "'" + holder.did + "'" : 'NULL'})
+                INSERT IGNORE INTO holder (id, name, email, org_id, did, added_by)
+                VALUES ('${holder.id}','${holder.name}', '${holder.email}', '${holder.org_id}', ${holder.did ? "'" + holder.did + "'" : 'NULL'}, '${holder.added_by}')
                 `)
             )
         )
