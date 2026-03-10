@@ -157,7 +157,7 @@ export const checkForHolderDuplicates = async emailList => {
 
 export const addHolders = async data => {
     const added_by = data.added_by
-    const queryValues = data.holders.map(holder=>`(${holder.name},${holder.did},${holder.email},${holder.org_id}, ${added_by})`).join(',')
+    const queryValues = data.holders.map(holder=>`('${holder.name}','${holder.did}','${holder.email}','${holder.org_id}', '${added_by}')`).join(',')
     const result = await pool.query(`insert into holder (name, did, email, org_id, added_by) values ${queryValues}`);
     return result;
 }
@@ -245,18 +245,19 @@ export const getHolder = async id => {
     return result[0]
 }
 
-export const addHolder = async holder => {
-    const result = await pool.query(`insert into holder (name, did, email, org_id) values (?,?,?,?)`, [holder.name, holder.did, holder.email, holder.org_id]);
+export const addHolder = async data => {
+    const result = await pool.query(`insert into holder (name, did, email, org_id, added_by) values (?,?,?,?,?)`, [data.holder.name, data.holder.did, data.holder.email, data.holder.org_id, data.added_by]);
      return result;
 }
 
-export const updateHolder = async (id, holder) => {
+export const updateHolder = async (id, data) => {
     const result = await pool.query(`UPDATE holder
         SET name = ?, 
         did = ?,
         email = ?,
-        org_id = ?
-        WHERE id = ?`, [holder.name, holder.did, holder.email, holder.org_id, id]);
+        org_id = ?,
+        updated_by = ?
+        WHERE id = ?`, [data.holder.name, data.holder.did, data.holder.email, data.holder.org_id, data.updated_by, id]);
     return result;
 }
 
@@ -269,7 +270,6 @@ export const lookupPickupToken = async pickupToken => {
     //we do the pickup lookup separately so that
     //we can show a different message if the token is good, but there are no creds for the holder 
     const tokenLookupResult = await pool.query(`SELECT * FROM notification WHERE pickup_token = ?`, [pickupToken]);
-    console.log("token lookup result: ", tokenLookupResult)
     const holderId = tokenLookupResult[0].holder_id;
     return fetchCredentialsForHolder(holderId)
 }
