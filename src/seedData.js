@@ -20,34 +20,39 @@ const holders = [
     name: 'James Chartrand',
     email: 'jc.chartrand@gmail.com',
     did: 'did:web:digitalcredentials.github.io:vc-test-fixtures:dids:me',
-    org_id: '1'
+    org_id: '1',
+    added_by: 'jc.chartrand@gmail.com'
   },
   {
     id: '73BEFADD-0BA4-418E-9141-0DCDBDE98776',
     name: 'Taylor Tuna',
     email: 'taylor@pacific.sea',
     did: 'did:web:digitalcredentials.github.io:vc-test-fixtures:dids:tuna',
-    org_id: '2'
+    org_id: '2',
+    added_by: 'jc.chartrand@gmail.com'
   },
   {
     id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
     name: 'Sam Salmon',
     email: 'sam@pacific.sea',
     did: 'did:web:digitalcredentials.github.io:vc-test-fixtures:dids:salmon',
-    org_id: '3'
+    org_id: '3',
+    added_by: 'jc.chartrand@gmail.com'
   },
   {
     id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
     name: 'Charlie Crayfish',
     email: 'charlie@pacific.sea',
     did: 'did:web:digitalcredentials.github.io:vc-test-fixtures:dids:crayfish',
-    org_id: '4'
+    org_id: '4',
+    added_by: 'jc.chartrand@gmail.com'
   },
   {
     id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
     name: 'Harper Haddock',
     email: 'harper@pacific.sea',
-    org_id: '5'
+    org_id: '5',
+    added_by: 'jc.chartrand@gmail.com'
   }
 ];
 
