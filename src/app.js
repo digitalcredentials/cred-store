@@ -16,6 +16,7 @@ import {
     fetchHolderCount,
     getHolder,
     addHolder,
+    addHolders,
     updateHolder,
     fetchCredentialsForHolder,
     fetchCredentialCountForHolder,
@@ -133,6 +134,16 @@ export async function build() {
     let submittedHolder = req.body;
     try {
         const result = await addHolder(submittedHolder)
+        res.json(result);
+    } catch (err) {
+        throw err;
+    }
+  })
+
+  app.post('/holders', async function (req, res) {
+    let holders = req.body;
+    try {
+        const result = await addHolders(holders)
         res.json(result);
     } catch (err) {
         throw err;
