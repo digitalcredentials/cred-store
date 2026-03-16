@@ -1,7 +1,6 @@
-
 import testVC from './vc-templates/test-vc.js'
 
-const categories = [
+const tags = [
   {
     id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
     name: 'Spring2026',
@@ -142,7 +141,7 @@ const templates = [
 
 const credentials = [
   {
-    category_id: categories[0].id,
+    tag_id: tags[0].id,
     cred_name: "Bachelor of Arts",
     cred_template_id: templates[1].id,
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
@@ -152,7 +151,7 @@ const credentials = [
     tenant_id: '2366E51E-10D1-4EFD-9200-FCCD2A0452E8'
   },
   {
-    category_id: categories[0].id,
+    tag_id: tags[0].id,
     cred_name: "Bachelor of Arts",
     cred_template_id: templates[1].id,
     holder_id: '73BEFADD-0BA4-418E-9141-0DCDBDE98776',
@@ -163,7 +162,7 @@ const credentials = [
     tenant_id: '2366E51E-10D1-4EFD-9200-FCCD2A0452E8'
   },
   {
-    category_id: categories[1].id,
+    tag_id: tags[1].id,
     cred_name: "Master of Science",
     cred_template_id: templates[2].id,
     holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
@@ -173,7 +172,7 @@ const credentials = [
     tenant_id: '2366E51E-10D1-4EFD-9200-FCCD2A0452E8'
   },
   {
-    category_id: categories[1].id,
+    tag_id: tags[1].id,
     cred_name: "Master of Science",
     cred_template_id: templates[2].id,
     holder_id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
@@ -184,7 +183,7 @@ const credentials = [
   },
   {
     id: 'cdedcb59-39a0-43f7-a7a9-be6bd30b1a46',
-    category_id: categories[1].id,
+    tag_id: tags[1].id,
     cred_name: "Master of Scientific",
     cred_template_id: templates[2].id,
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
@@ -194,7 +193,7 @@ const credentials = [
     tenant_id: '4A46FCEA-9634-43CB-ABD5-B293997FBFFF'
   },
   {
-    category_id: categories[0].id,
+    tag_id: tags[0].id,
     cred_name: "Bachelor of Arts",
     cred_template_id: templates[3].id,
      holder_id: '73BEFADD-0BA4-418E-9141-0DCDBDE98776',
@@ -203,7 +202,7 @@ const credentials = [
     tenant_id: '4A46FCEA-9634-43CB-ABD5-B293997FBFFF'
   },
   {
-    category_id: categories[1].id,
+    tag_id: tags[1].id,
     cred_name: "Master of Science",
     cred_template_id: templates[0].id,
      holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
@@ -212,7 +211,7 @@ const credentials = [
     tenant_id: '4A46FCEA-9634-43CB-ABD5-B293997FBFFF'
   },
   {
-    category_id: categories[0].id,
+    tag_id: tags[0].id,
     cred_name: "Bachelor of Arts",
     cred_template_id: templates[2].id,
     holder_id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
@@ -221,7 +220,7 @@ const credentials = [
     tenant_id: '4A46FCEA-9634-43CB-ABD5-B293997FBFFF'
   },
   {
-    category_id: categories[1].id,
+    tag_id: tags[1].id,
     cred_name: "Master of Science",
     cred_template_id: templates[1].id,
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
@@ -230,7 +229,7 @@ const credentials = [
     tenant_id: '262F661C-4A25-4279-8474-0EB302D714BD'
   },
   {
-    category_id: categories[0].id,
+    tag_id: tags[0].id,
     cred_name: "Bachelor of Arts",
     cred_template_id: templates[3].id,
      holder_id: '73BEFADD-0BA4-418E-9141-0DCDBDE98776',
@@ -239,7 +238,7 @@ const credentials = [
     tenant_id: '262F661C-4A25-4279-8474-0EB302D714BD'
   },
   {
-    category_id: categories[1].id,
+    tag_id: tags[1].id,
     cred_name: "Master of Science",
     cred_template_id: templates[3].id,
      holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
@@ -248,7 +247,7 @@ const credentials = [
     tenant_id: '262F661C-4A25-4279-8474-0EB302D714BD'
   },
   {
-    category_id: categories[0].id,
+    tag_id: tags[0].id,
     cred_name: "Bachelor of Arts",
     cred_template_id: templates[1].id,
     holder_id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
@@ -257,7 +256,7 @@ const credentials = [
     tenant_id: '262F661C-4A25-4279-8474-0EB302D714BD'
   },
   {
-    category_id: categories[1].id,
+    tag_id: tags[1].id,
     cred_name: "Master of Science",
     cred_template_id: templates[0].id,
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
@@ -266,7 +265,7 @@ const credentials = [
     tenant_id: 'DAF9A925-B98D-4FA1-9008-0800FECB4FF1'
   },
   {
-    category_id: categories[0].id,
+    tag_id: tags[0].id,
     cred_name: "Bachelor of Arts",
     cred_template_id: templates[0].id,
      holder_id: '73BEFADD-0BA4-418E-9141-0DCDBDE98776',
@@ -275,7 +274,7 @@ const credentials = [
     tenant_id: 'DAF9A925-B98D-4FA1-9008-0800FECB4FF1'
   },
   {
-    category_id: categories[1].id,
+    tag_id: tags[1].id,
     cred_name: "Master of Science",
     cred_template_id: templates[2].id,
      holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
@@ -284,7 +283,7 @@ const credentials = [
     tenant_id: 'DAF9A925-B98D-4FA1-9008-0800FECB4FF1'
   },
   {
-    category_id: categories[0].id,
+    tag_id: tags[0].id,
     cred_name: "Bachelor of Arts",
     cred_template_id: templates[2].id,
     holder_id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
@@ -293,7 +292,7 @@ const credentials = [
     tenant_id: '90A5CC2F-660F-47B6-918F-FA7064961CC8'
   },
   {
-    category_id: categories[1].id,
+    tag_id: tags[1].id,
     cred_name: "Master of Science",
     cred_template_id: templates[0].id,
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
@@ -309,4 +308,4 @@ const batches = [
   { name: 'Fall2025', description: '1st batch for fall convocation', uploaded_csv: 'csv data', added_by: 'chartraj@mit.edu' }
 ];
 
-export { credentials, batches, categories, templates, holders, tenants };
+export { credentials, batches, tags, templates, holders, tenants };
