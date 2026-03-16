@@ -2,7 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import {createDatabase, seedDatabase} from './seed.js'
 import {
-    fetchCredentials, 
+    fetchCredentials,
+    fetchAllCredentials,
     fetchCredentialCount, 
     addCredential, 
     updateCredential, 
@@ -25,7 +26,11 @@ import {
     addNotification,
     lookupPickupToken,
     fetchAllTenants,
-    addBatch
+    addBatch,
+    getAllTags,
+    getTag,
+    updateTag,
+    addTag
 } from './queries.js'
 
 export async function build() {
@@ -160,6 +165,17 @@ export async function build() {
         }
   })
 
+  app.get('/credentials', async function (req, res) {
+    const id = req.params.id
+        try {
+            const result = await fetchAllCredentials();
+            res.send(result);
+        } catch (err) {
+            throw err;
+        }
+  })
+
+
       app.put('/holder/:id', async function (req, res) {
         const id = req.params.id
         let updatedValues = req.body;
@@ -250,6 +266,47 @@ export async function build() {
             throw err;
         }
   })
+
+  app.get('/tags', async function (req, res) {
+        try {
+            const result = await getAllTags();
+            res.send(result);
+        } catch (err) {
+            throw err;
+        }
+  })
+
+    app.get('/tag/:id', async function (req, res) {
+    const id = req.params.id
+        try {
+            const result = await getTag(id);
+            res.send(result);
+        } catch (err) {
+            throw err;
+        }
+  })
+
+    app.put('/tag/:id', async function (req, res) {
+        const id = req.params.id
+        let updatedValues = req.body;
+        try {
+            const result = updateTag(id, updatedValues);
+            res.json({success:true});
+        } catch (err) {
+            throw err;
+        }
+  })
+
+     app.post('/tag', async function (req, res) {
+    let data = req.body;
+    try {
+        const result = await addTag(data)
+        res.json({success:true});
+    } catch (err) {
+        throw err;
+    }
+  })
+
 
   app.get('/tenants', async function (req, res) {
         try {
