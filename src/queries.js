@@ -1,7 +1,7 @@
 import pool from './pool.js'
 
 export const fetchAllCredentials = async () => {
-    return await pool.query("select * from credential");
+    return await pool.query(commonCredQuery);
 }
 
 export const fetchBatches = async (limit) => {
@@ -48,11 +48,15 @@ const commonCredQuery = `SELECT
         template.template_json as template_json,
         template.name as template_name,
         template.description as template_description,
-        template.image_url as template_image_url
+        template.image_url as template_image_url,
+        tag.id as tag_id,
+        tag.name as tag_name,
+        tag.description as tag_description
         FROM credential
         INNER JOIN holder ON credential.holder_id = holder.id
         INNER JOIN tenant ON credential.tenant_id = tenant.id
         INNER JOIN template ON credential.cred_template_id = template.id
+        INNER JOIN tag ON credential.tag_id = tag.id
         `
 
 export const fetchCredentials = async (queryTerm, currentPage) => {
@@ -73,6 +77,31 @@ export const getTemplate = async id => {
     const result = await pool.query(`SELECT * FROM template WHERE id = ?`, [id]);
     const template = result[0]
     return template
+}
+
+export const getAllTags = async () => {
+    const result = await pool.query(`SELECT * FROM tag`);
+    const tag = result
+    return tag
+}
+
+export const getTag = async id => {
+    const result = await pool.query(`SELECT * FROM tag WHERE id = ?`, [id]);
+    const tag = result[0]
+    return tag
+}
+
+export const addTag = async tag => {
+    const result = await pool.query(`INSERT INTO tag (name, description) VALUES (?,?)`, [tag.name, tag.description]);
+     return result;
+}
+
+export const updateTag = async (id, tag) => {
+    const result = await pool.query(`UPDATE tag
+        SET name = ?, 
+        description = ?
+        WHERE id = ?`, [tag.name, tag.description, id]);
+    return result;
 }
 
 export const getCredential = async id => {
@@ -103,6 +132,12 @@ export const getCredential = async id => {
         image_url: credential.template_image_url
     }
 
+    const tag = {
+        id: credential.tag_id,
+        name: credential.tag_name,
+        description: credential.tag_description
+    }
+
     delete credential.holder_id
     delete credential.holder_name
     delete credential.holder_did
@@ -122,8 +157,11 @@ export const getCredential = async id => {
     delete credential.template_json
     delete credential.cred_template_id
 
+     delete credential.tag_id
+    delete credential.tag_name
+    delete credential.tag_description
 
-    return {credential, holder, tenant, template}
+    return {credential, holder, tenant, template, tag}
     
 }
 
@@ -164,13 +202,13 @@ export const addHolders = async data => {
 
 export const addCredentials = async credentials => {
      // TODO, this is a batch so will need to add the batch info, ie., batch description (category???), templateId, csv file.
-    const queryValues = credentials.map(credential=>`(${credential.cred_name},${credential.holder_id},${credential.cred_template_id},${credential.tenant_id},${credential.added_by})`).join(',')
-    const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, added_by) values  ${queryValues}`);
+    const queryValues = credentials.map(credential=>`(${credential.cred_name},${credential.holder_id},${credential.cred_template_id},${credential.tenant_id},${credential.tag_id},${credential.added_by})`).join(',')
+    const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, tag_id, added_by) values  ${queryValues}`);
      return result;
 }
 
 export const addCredential = async credential => {
-    const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, added_by) values (?,?,?,?,?)`, [credential.cred_name, credential.holder_id, credential.cred_template_id, credential.tenant_id, credential.added_by]);
+    const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, tag_id, added_by) values (?,?,?,?,?,?)`, [credential.cred_name, credential.holder_id, credential.cred_template_id, credential.tenant_id, credential.tag_id, credential.added_by]);
      return result;
 }
 
@@ -179,8 +217,9 @@ export const updateCredential = async (id, credential) => {
         SET cred_name = ?, 
         holder_id = ?,
         cred_template_id = ?,
-        tenant_id = ?
-        WHERE id = ?`, [credential.cred_name, credential.holder_id, credential.cred_template_id, credential.tenant_id, id]);
+        tenant_id = ?,
+        tag_id = ?
+        WHERE id = ?`, [credential.cred_name, credential.holder_id, credential.cred_template_id, credential.tenant_id, credential.tag_id, id]);
     return result;
 }
   
@@ -197,7 +236,6 @@ export const fetchHolders = async (queryTerm, currentPage) => {
     const count = await fetchHolderCount(queryTerm)
     return {holders,count}
 }
-
 
 export const fetchHolderCount = async (queryTerm) => {
     const result = await pool.query(`SELECT COUNT(*) as count FROM holder
