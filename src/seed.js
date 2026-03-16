@@ -1,6 +1,6 @@
 import mariadb from 'mariadb';
 import pool from './pool.js';
-import { credentials, templates, batches, categories, holders, tenants } from './seedData.js';
+import { credentials, templates, batches, tags, holders, tenants } from './seedData.js';
 
 // Define connection parameters without 
 // specifying a 'database' because we haven't got one yet
@@ -40,7 +40,7 @@ async function dropTables(conn) {
 
     try {
         console.log('Dropping all tables...');
-        await conn.query(`DROP TABLE IF EXISTS credential, category, batch, template, holder, notification, pickup, tenant;`);
+        await conn.query(`DROP TABLE IF EXISTS credential, tag, batch, template, holder, notification, pickup, tenant;`);
         console.log('All tables successfully dropped.');
     } catch (err) {
         console.error('Error trying to drop tables:', err);
@@ -60,11 +60,11 @@ async function addTables(conn) {
                 verifiable_credential JSON,
                 batch_id UUID,
                 tenant_id UUID NOT NULL,
-                category_id UUID,
+                tag_id UUID,
                 cred_template_id UUID,
                 email_template_id UUID,
                 holder_id UUID NOT NULL,
-                status ENUM('pending', 'notified', 'collected', 'revoked', 'deactivated') NOT NULL DEFAULT 'pending',
+                status ENUM('hidden','collectable','revoked') NOT NULL DEFAULT 'hidden',
                 date_added DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
                 date_notified DATETIME,
                 date_collected DATETIME,
@@ -150,7 +150,7 @@ async function addTables(conn) {
         `)
 
          await conn.query(`
-            CREATE TABLE IF NOT EXISTS category (
+            CREATE TABLE IF NOT EXISTS tag (
                 id UUID NOT NULL DEFAULT UUID(),
                 name VARCHAR(100) NOT NULL,
                 description VARCHAR(255),
@@ -172,8 +172,8 @@ async function seedTables(conn) {
         // --- Insert Seed Data ---
         const insertedCredentials = await Promise.all(
             credentials.map(credential => conn.query(`
-                INSERT IGNORE INTO credential (cred_name, cred_template_id, holder_id, added_by, category_id, status, date_added, tenant_id)
-                VALUES ('${credential.cred_name}', '${credential.cred_template_id}', '${credential.holder_id}', '${credential.added_by}', '${credential.category_id}', '${credential.status ?? "pending"}', '${credential.date_added}', '${credential.tenant_id}')
+                INSERT IGNORE INTO credential (cred_name, cred_template_id, holder_id, added_by, tag_id, status, date_added, tenant_id)
+                VALUES ('${credential.cred_name}', '${credential.cred_template_id}', '${credential.holder_id}', '${credential.added_by}', '${credential.tag_id}', '${credential.status ?? "pending"}', '${credential.date_added}', '${credential.tenant_id}')
                 `)
             )
         )
@@ -210,10 +210,10 @@ async function seedTables(conn) {
             )
         )
 
-        const insertedCategories = await Promise.all(
-            categories.map(category => conn.query(`
-                INSERT IGNORE INTO category (id, name, description)
-                VALUES ('${category.id}', '${category.name}', '${category.description}')
+        const insertedTags = await Promise.all(
+            tags.map(tag => conn.query(`
+                INSERT IGNORE INTO tag (id, name, description)
+                VALUES ('${tag.id}', '${tag.name}', '${tag.description}')
                 `)
             )
         )
