@@ -6,7 +6,8 @@ import {
     fetchAllCredentials,
     fetchCredentialCount, 
     addCredential, 
-    updateCredential, 
+    updateCredential,
+    updateCredentials,
     getCredential, 
     getReportData, 
     fetchBatches, 
@@ -233,6 +234,16 @@ export async function build() {
         let updatedValues = req.body;
         try {
             const result = updateCredential(id, updatedValues);
+        res.send(result);
+        } catch (err) {
+            throw err;
+        }
+  })
+
+  app.put('/credentials', async function (req, res) {
+        let updatedValues = req.body;
+        try {
+            const result = updateCredentials(updatedValues);
         res.send(result);
         } catch (err) {
             throw err;
