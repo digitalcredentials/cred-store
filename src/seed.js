@@ -64,7 +64,7 @@ async function addTables(conn) {
                 cred_template_id UUID,
                 email_template_id UUID,
                 holder_id UUID NOT NULL,
-                status ENUM('hidden','collectable','revoked') NOT NULL DEFAULT 'hidden',
+                status ENUM('hidden','collectable') NOT NULL DEFAULT 'collectable',
                 date_added DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
                 date_notified DATETIME,
                 date_collected DATETIME,
