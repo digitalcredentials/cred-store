@@ -222,6 +222,19 @@ export const updateCredential = async (id, credential) => {
         WHERE id = ?`, [credential.cred_name, credential.holder_id, credential.cred_template_id, credential.tenant_id, credential.tag_id, id]);
     return result;
 }
+
+export const updateCredentials = async (values) => {
+    const credentialIdList = values.cred_ids.split(',').map(credId=>`'${credId}'`).join()
+    const result = await pool.query(`UPDATE credential
+        SET status = ?,
+        cred_template_id = ?,
+        tenant_id = ?,
+        tag_id = ?,
+        updated_by = ?
+        WHERE id IN (${credentialIdList})`, [values.status, values.cred_template_id, values.tenant_id, values.tag_id, values.updated_by]);
+        return result;
+}
+
   
 export const fetchHolders = async (queryTerm, currentPage) => {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
