@@ -71,6 +71,7 @@ async function addTables(conn) {
                 date_revoked DATETIME,
                 revoked_by VARCHAR(100),
                 added_by VARCHAR(100) NOT NULL,
+                updated_by VARCHAR(100),    
                 PRIMARY KEY (id)
             );
         `);
