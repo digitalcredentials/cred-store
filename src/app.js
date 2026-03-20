@@ -299,7 +299,7 @@ export async function build() {
 
     app.put('/tag/:id', async function (req, res) {
         const id = req.params.id
-        let updatedValues = req.body;
+        let updatedValues = req.body.tag;
         try {
             const result = updateTag(id, updatedValues);
             res.json({success:true});
@@ -309,7 +309,7 @@ export async function build() {
   })
 
      app.post('/tag', async function (req, res) {
-    let data = req.body;
+    let data = req.body.tag;
     try {
         const result = await addTag(data)
         res.json({success:true});
