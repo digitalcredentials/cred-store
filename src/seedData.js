@@ -11,6 +11,16 @@ const tags = [
     name: 'Fall2026',
     description: 'Fall Convocation'
   },
+  {
+    id: '3958dc9e-712f-4377-85e9-fec226a6442a',
+    name: 'BostonMeeting2024',
+    description: 'Conference attendance'
+  },
+  {
+    id: '3958dc9e-712f-4377-85e9-fec4b6a9842a',
+    name: 'DefltMeeting2025',
+    description: 'Conference attendance'
+  }
 ];
 
 const holders = [
@@ -60,7 +70,7 @@ const tenants = [
     id: '2366E51E-10D1-4EFD-9200-FCCD2A0452E8',
     name: 'Economics Department',
     email: 'jc.chartrand@gmail.com',
-    desciption: 'Economics Department Signer',
+    description: 'Economics Department Signer',
     env_name: 'UN_PROTECTED_TEST',
     issuer_name: 'Wonderful U - Department of Economics',
     issuer_url: 'https://econ.wonderfulu.edu',
@@ -70,7 +80,7 @@ const tenants = [
     id: '4A46FCEA-9634-43CB-ABD5-B293997FBFFF',
     name: 'Chemistry Department',
     email: 'jc.chartrand@gmail.com',
-    desciption: 'Chemistry Department Signer',
+    description: 'Chemistry Department Signer',
     env_name: 'PROTECTED_TEST',
     issuer_name: 'Wonderful U - Department of Che istry',
     issuer_url: 'https://chem.wonderfulu.edu',
@@ -80,7 +90,7 @@ const tenants = [
     id: '262F661C-4A25-4279-8474-0EB302D714BD',
     name: 'Continuing Education',
     email: 'jc.chartrand@gmail.com',
-    desciption: 'Continuing Education Signer',
+    description: 'Continuing Education Signer',
     env_name: 'RANDOMING_TESTING',
     issuer_name: 'Wonderful U - Continuing Education',
     issuer_url: 'https://con-ed.wonderfulu.edu',
@@ -90,7 +100,7 @@ const tenants = [
     id: 'DAF9A925-B98D-4FA1-9008-0800FECB4FF1',
     name: 'Registrar',
     email: 'jc.chartrand@gmail.com',
-    desciption: 'For signing miscellaneous registrarial documents,',
+    description: 'For signing miscellaneous registrarial documents,',
     env_name: 'TEST',
     issuer_name: 'Wonderful U - Registrar',
     issuer_url: 'https://registrar.wonderfulu.edu',
@@ -115,6 +125,7 @@ const templates = [
     name: 'Bachelor of Engineering',
     description: 'Standard Bachelor of Engineering',
     image_url: '/customers/evil-rabbit.png',
+    added_by: 'jc.chartrand@gmail.com'
   },
   {
     id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
@@ -122,6 +133,7 @@ const templates = [
     name: 'Bachelor of Science',
     description: 'Standard Bachelor of Science',
     image_url: '/customers/evil-rabbit.png',
+    added_by: 'jc.chartrand@gmail.com'
   },
   {
     id: 'CC27C14A-0ACF-4F4A-A6C9-D45682C144B9',
@@ -129,6 +141,7 @@ const templates = [
     name: 'Bachelor of Arts',
     description: 'Standard Bachelor of Arts',
     image_url: '/customers/evil-rabbit.png',
+    added_by: 'jc.chartrand@gmail.com'
   },
   {
     id: '13D07535-C59E-4157-A011-F8D2EF4E0CBB',
@@ -136,6 +149,7 @@ const templates = [
     name: 'Master of Science',
     description: 'Standard Master of Science',
     image_url: '/customers/evil-rabbit.png',
+    added_by: 'jc.chartrand@gmail.com'
   }
 ];
 
@@ -146,9 +160,11 @@ const credentials = [
     cred_template_id: templates[1].id,
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
     added_by: 'chartraj@mit.edu',
-    status: 'collected',
+    status: 'collectable',
     date_added: '2026-01-24 14:30:00',
-    tenant_id: '2366E51E-10D1-4EFD-9200-FCCD2A0452E8'
+    tenant_id: '2366E51E-10D1-4EFD-9200-FCCD2A0452E8',
+    valid_from: '2020-03-08',
+    valid_until: '2024-03-09'
   },
   {
     tag_id: tags[0].id,
@@ -157,9 +173,10 @@ const credentials = [
     holder_id: '73BEFADD-0BA4-418E-9141-0DCDBDE98776',
     holder_email: 'chartraj@mit.edu',
     added_by: 'chartraj@mit.edu',
-    status: 'collected',
+    status: 'collectable',
     date_added: '2026-01-24 14:30:00',
-    tenant_id: '2366E51E-10D1-4EFD-9200-FCCD2A0452E8'
+    tenant_id: '2366E51E-10D1-4EFD-9200-FCCD2A0452E8',
+    valid_until: '2024-03-09'
   },
   {
     tag_id: tags[1].id,
@@ -167,9 +184,10 @@ const credentials = [
     cred_template_id: templates[2].id,
     holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
     added_by: 'someone@mit.edu',
-    status: 'notified',
+    status: 'collectable',
     date_added: '2026-01-24 14:30:00',
-    tenant_id: '2366E51E-10D1-4EFD-9200-FCCD2A0452E8'
+    tenant_id: '2366E51E-10D1-4EFD-9200-FCCD2A0452E8',
+    valid_from: '2020-03-08'
   },
   {
     tag_id: tags[1].id,
@@ -177,9 +195,10 @@ const credentials = [
     cred_template_id: templates[2].id,
     holder_id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
     added_by: 'someone@mit.edu',
-    status: 'notified',
+    status: 'collectable',
     date_added: '2026-01-24 14:30:00',
-    tenant_id: '2366E51E-10D1-4EFD-9200-FCCD2A0452E8'
+    tenant_id: '2366E51E-10D1-4EFD-9200-FCCD2A0452E8',
+    valid_from: '2020-03-08'
   },
   {
     id: 'cdedcb59-39a0-43f7-a7a9-be6bd30b1a46',
@@ -188,9 +207,11 @@ const credentials = [
     cred_template_id: templates[2].id,
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
     added_by: 'someone@mit.edu',
-    status: 'notified',
+    status: 'collectable',
     date_added: '2025-12-24 14:30:00',
-    tenant_id: '4A46FCEA-9634-43CB-ABD5-B293997FBFFF'
+    tenant_id: '4A46FCEA-9634-43CB-ABD5-B293997FBFFF',
+    valid_from: '2020-03-08',
+    valid_until: '2024-03-09'
   },
   {
     tag_id: tags[0].id,
@@ -198,8 +219,11 @@ const credentials = [
     cred_template_id: templates[3].id,
      holder_id: '73BEFADD-0BA4-418E-9141-0DCDBDE98776',
     added_by: 'chartraj@mit.edu',
+    status: 'collectable',
     date_added: '2025-12-24 14:30:00',
-    tenant_id: '4A46FCEA-9634-43CB-ABD5-B293997FBFFF'
+    tenant_id: '4A46FCEA-9634-43CB-ABD5-B293997FBFFF',
+    valid_from: '2020-03-08',
+    valid_until: '2024-03-09'
   },
   {
     tag_id: tags[1].id,
@@ -207,8 +231,11 @@ const credentials = [
     cred_template_id: templates[0].id,
      holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
     added_by: 'someone@mit.edu',
+    status: 'hidden',
     date_added: '2025-12-24 14:30:00',
-    tenant_id: '4A46FCEA-9634-43CB-ABD5-B293997FBFFF'
+    tenant_id: '4A46FCEA-9634-43CB-ABD5-B293997FBFFF',
+    valid_from: '2020-03-08',
+    valid_until: '2028-03-09'
   },
   {
     tag_id: tags[0].id,
@@ -216,8 +243,11 @@ const credentials = [
     cred_template_id: templates[2].id,
     holder_id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
     added_by: 'chartraj@mit.edu',
+    status: 'hidden',
     date_added: '2025-08-24 14:30:00',
-    tenant_id: '4A46FCEA-9634-43CB-ABD5-B293997FBFFF'
+    tenant_id: '4A46FCEA-9634-43CB-ABD5-B293997FBFFF',
+    valid_from: '2020-03-08',
+    valid_until: '2028-03-09'
   },
   {
     tag_id: tags[1].id,
@@ -225,8 +255,11 @@ const credentials = [
     cred_template_id: templates[1].id,
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
     added_by: 'someone@mit.edu',
+    status: 'hidden',
     date_added: '2025-08-24 14:30:00',
-    tenant_id: '262F661C-4A25-4279-8474-0EB302D714BD'
+    tenant_id: '262F661C-4A25-4279-8474-0EB302D714BD',
+    valid_from: '2020-03-08',
+    valid_until: '2028-03-09'
   },
   {
     tag_id: tags[0].id,
@@ -235,7 +268,10 @@ const credentials = [
      holder_id: '73BEFADD-0BA4-418E-9141-0DCDBDE98776',
     added_by: 'chartraj@mit.edu',
     date_added: '2025-08-24 14:30:00',
-    tenant_id: '262F661C-4A25-4279-8474-0EB302D714BD'
+    status: 'hidden',
+    tenant_id: '262F661C-4A25-4279-8474-0EB302D714BD',
+    valid_from: '2020-03-08',
+    valid_until: '2028-03-09'
   },
   {
     tag_id: tags[1].id,
@@ -243,8 +279,11 @@ const credentials = [
     cred_template_id: templates[3].id,
      holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
     added_by: 'someone@mit.edu',
+    status: 'hidden',
     date_added: '2025-08-24 14:30:00',
-    tenant_id: '262F661C-4A25-4279-8474-0EB302D714BD'
+    tenant_id: '262F661C-4A25-4279-8474-0EB302D714BD',
+    valid_from: '2020-03-08',
+    valid_until: '2028-03-09'
   },
   {
     tag_id: tags[0].id,
@@ -252,8 +291,10 @@ const credentials = [
     cred_template_id: templates[1].id,
     holder_id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
     added_by: 'chartraj@mit.edu',
+    status: 'hidden',
     date_added: '2025-08-24 14:30:00',
-    tenant_id: '262F661C-4A25-4279-8474-0EB302D714BD'
+    tenant_id: '262F661C-4A25-4279-8474-0EB302D714BD',
+
   },
   {
     tag_id: tags[1].id,
@@ -262,7 +303,9 @@ const credentials = [
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
     added_by: 'someone@mit.edu',
     date_added: '2025-08-24 14:30:00',
-    tenant_id: 'DAF9A925-B98D-4FA1-9008-0800FECB4FF1'
+    status: 'collectable',
+    tenant_id: 'DAF9A925-B98D-4FA1-9008-0800FECB4FF1',
+    valid_until: '2028-03-09'
   },
   {
     tag_id: tags[0].id,
@@ -271,7 +314,10 @@ const credentials = [
      holder_id: '73BEFADD-0BA4-418E-9141-0DCDBDE98776',
     added_by: 'chartraj@mit.edu',
     date_added: '2025-11-24 14:30:00',
-    tenant_id: 'DAF9A925-B98D-4FA1-9008-0800FECB4FF1'
+    status: 'collectable',
+    tenant_id: 'DAF9A925-B98D-4FA1-9008-0800FECB4FF1',
+    valid_from: '2020-03-08',
+    valid_until: '2028-03-09'
   },
   {
     tag_id: tags[1].id,
@@ -280,7 +326,10 @@ const credentials = [
      holder_id: 'C74643D6-6771-4510-B3BC-9442DAED936D',
     added_by: 'someone@mit.edu',
     date_added: '2025-11-24 14:30:00',
-    tenant_id: 'DAF9A925-B98D-4FA1-9008-0800FECB4FF1'
+    status: 'collectable',
+    tenant_id: 'DAF9A925-B98D-4FA1-9008-0800FECB4FF1',
+    valid_from: '2020-03-08',
+    valid_until: '2028-03-09'
   },
   {
     tag_id: tags[0].id,
@@ -289,7 +338,9 @@ const credentials = [
     holder_id: 'F9D0AAF4-E535-4B8C-84A2-7B627DF21031',
     added_by: 'chartraj@mit.edu',
     date_added: '2025-11-24 14:30:00',
-    tenant_id: '90A5CC2F-660F-47B6-918F-FA7064961CC8'
+    status: 'collectable',
+    tenant_id: '90A5CC2F-660F-47B6-918F-FA7064961CC8',
+    valid_until: '2028-03-09'
   },
   {
     tag_id: tags[1].id,
@@ -297,8 +348,11 @@ const credentials = [
     cred_template_id: templates[0].id,
     holder_id: 'B21A0736-5F70-4251-B648-1551595DB051',
     added_by: 'someone@mit.edu',
+    status: 'collectable',
     date_added: '2025-11-24 14:30:00',
-    tenant_id: '90A5CC2F-660F-47B6-918F-FA7064961CC8'
+    tenant_id: '90A5CC2F-660F-47B6-918F-FA7064961CC8',
+    valid_from: '2020-03-08',
+    valid_until: '2028-03-09'
   }
 ];
 
