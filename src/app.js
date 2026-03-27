@@ -27,6 +27,9 @@ import {
     addNotification,
     lookupPickupToken,
     fetchAllTenants,
+    getTenant,
+    addTenant,
+    updateTenant,
     addBatch,
     getAllTags,
     getTag,
@@ -146,6 +149,16 @@ export async function build() {
     }
   })
 
+   app.post('/tenant', async function (req, res) {
+    let data = req.body;
+    try {
+        const result = await addTenant(data)
+        res.json({success:true});
+    } catch (err) {
+        throw err;
+    }
+  })
+
   app.post('/holders', async function (req, res) {
     let holders = req.body;
     try {
@@ -166,6 +179,16 @@ export async function build() {
         }
   })
 
+  app.get('/tenant/:id', async function (req, res) {
+    const id = req.params.id
+        try {
+            const result = await getTenant(id);
+            res.send(result);
+        } catch (err) {
+            throw err;
+        }
+  })
+
   app.get('/credentials', async function (req, res) {
     const id = req.params.id
         try {
@@ -177,7 +200,7 @@ export async function build() {
   })
 
 
-      app.put('/holder/:id', async function (req, res) {
+    app.put('/holder/:id', async function (req, res) {
         const id = req.params.id
         let updatedValues = req.body;
         try {
@@ -187,6 +210,18 @@ export async function build() {
             throw err;
         }
   })
+
+  app.put('/tenant/:id', async function (req, res) {
+        const id = req.params.id
+        let updatedValues = req.body;
+        try {
+            const result = await updateTenant(id, updatedValues);
+            res.json({success:true});
+        } catch (err) {
+            throw err;
+        }
+  })
+
 
   app.post('/holders/duplicates', async function (req, res) {
         const emailList = req.body;
