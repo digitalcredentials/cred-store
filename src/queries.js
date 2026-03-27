@@ -39,6 +39,8 @@ const commonCredQuery = `SELECT
         credential.status as status, 
         credential.date_added as date_added,
         credential.cred_template_id,
+        credential.valid_from,
+        credential.valid_until,
         tenant.id as tenant_id,
         tenant.env_name as tenant_env_name,
         tenant.issuer_name as tenant_issuer_name,
@@ -202,13 +204,13 @@ export const addHolders = async data => {
 
 export const addCredentials = async credentials => {
      // TODO, this is a batch so will need to add the batch info, ie., batch description (category???), templateId, csv file.
-    const queryValues = credentials.map(credential=>`(${credential.cred_name},${credential.holder_id},${credential.cred_template_id},${credential.tenant_id},${credential.tag_id},${credential.added_by})`).join(',')
-    const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, tag_id, added_by) values  ${queryValues}`);
+    const queryValues = credentials.map(credential=>`(${credential.cred_name},${credential.holder_id},${credential.cred_template_id},${credential.tenant_id},${credential.status},${credential.tag_id},${credential.valid_from},${credential.valid_until},${credential.added_by})`).join(',')
+    const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, status, tag_id, valid_from, valid_until, added_by) values  ${queryValues}`);
      return result;
 }
 
 export const addCredential = async credential => {
-    const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, tag_id, added_by) values (?,?,?,?,?,?)`, [credential.cred_name, credential.holder_id, credential.cred_template_id, credential.tenant_id, credential.tag_id, credential.added_by]);
+    const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, status, tag_id, valid_from, valid_until, added_by) values (?,?,?,?,?,?,?,?,?)`, [credential.cred_name, credential.holder_id, credential.cred_template_id, credential.tenant_id, credential.status, credential.tag_id, credential.valid_from, credential.valid_until, credential.added_by]);
      return result;
 }
 
@@ -218,8 +220,11 @@ export const updateCredential = async (id, credential) => {
         holder_id = ?,
         cred_template_id = ?,
         tenant_id = ?,
-        tag_id = ?
-        WHERE id = ?`, [credential.cred_name, credential.holder_id, credential.cred_template_id, credential.tenant_id, credential.tag_id, id]);
+        status = ?,
+        tag_id = ?,
+        valid_from = ?,
+        valid_until = ?
+        WHERE id = ?`, [credential.cred_name, credential.holder_id, credential.cred_template_id, credential.tenant_id, credential.status, credential.tag_id, credential.valid_from, credential.valid_until ,id]);
     return result;
 }
 
@@ -229,9 +234,10 @@ export const updateCredentials = async (values) => {
         SET status = ?,
         cred_template_id = ?,
         tenant_id = ?,
+        status = ?,
         tag_id = ?,
         updated_by = ?
-        WHERE id IN (${credentialIdList})`, [values.status, values.cred_template_id, values.tenant_id, values.tag_id, values.updated_by]);
+        WHERE id IN (${credentialIdList})`, [values.status, values.cred_template_id, values.tenant_id, values.status, values.tag_id, values.updated_by]);
         return result;
 }
 
@@ -309,6 +315,32 @@ export const updateHolder = async (id, data) => {
         org_id = ?,
         updated_by = ?
         WHERE id = ?`, [data.holder.name, data.holder.did, data.holder.email, data.holder.org_id, data.updated_by, id]);
+    return result;
+}
+
+export const getTenant = async id => {
+    const result = await pool.query(`SELECT * FROM tenant WHERE id = ?`, [id]);
+    return result[0]
+}
+
+export const addTenant = async data => {
+    const result = await pool.query(`insert into tenant (name, description, email, issuer_name, issuer_url, issuer_image_url, env_name, is_active, added_by) values (?,?,?,?,?,?,?,?,?)`, 
+        [data.tenant.name, data.tenant.description, data.tenant.email, data.tenant.issuer_name, data.tenant.issuer_url, data.tenant.issuer_image_url, data.tenant.env_name, data.tenant.is_active, data.added_by]);
+     return result;
+}
+
+export const updateTenant = async (id, data) => {
+    const result = await pool.query(`UPDATE tenant
+        SET name = ?, 
+        description = ?, 
+        email = ?,
+        issuer_name = ?,
+        issuer_url = ?,
+        issuer_image_url = ?,
+        env_name = ?,
+        is_active = ?,
+        updated_by = ?
+        WHERE id = ?`, [data.tenant.name, data.tenant.description, data.tenant.email, data.tenant.issuer_name, data.tenant.issuer_url, data.tenant.issuer_image_url, data.tenant.env_name, data.tenant.is_active, data.updated_by, id]);
     return result;
 }
 
