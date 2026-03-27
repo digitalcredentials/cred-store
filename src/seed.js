@@ -64,12 +64,10 @@ async function addTables(conn) {
                 cred_template_id UUID,
                 email_template_id UUID,
                 holder_id UUID NOT NULL,
+                valid_from DATE DEFAULT NULL,
+                valid_until DATE DEFAULT NULL,
                 status ENUM('hidden','collectable') NOT NULL DEFAULT 'collectable',
                 date_added DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-                date_notified DATETIME,
-                date_collected DATETIME,
-                date_revoked DATETIME,
-                revoked_by VARCHAR(100),
                 added_by VARCHAR(100) NOT NULL,
                 updated_by VARCHAR(100),    
                 PRIMARY KEY (id)
@@ -127,12 +125,15 @@ async function addTables(conn) {
             CREATE TABLE IF NOT EXISTS tenant (
                 id UUID NOT NULL DEFAULT UUID(),
                 name VARCHAR(100) NOT NULL,
-                description VARCHAR(255),
+                description VARCHAR(255) NOT NULL,
                 email VARCHAR(100) NOT NULL,
                 issuer_name VARCHAR(100) NOT NULL,
                 issuer_image_url VARCHAR(300) NOT NULL,
                 issuer_url VARCHAR(300) NOT NULL,
                 env_name VARCHAR(100) NOT NULL,
+                is_active BOOLEAN NOT NULL DEFAULT TRUE,
+                added_by VARCHAR(100) NOT NULL,
+                updated_by VARCHAR(100),
                 PRIMARY KEY (id)
             );
         `)
@@ -173,8 +174,18 @@ async function seedTables(conn) {
         // --- Insert Seed Data ---
         const insertedCredentials = await Promise.all(
             credentials.map(credential => conn.query(`
-                INSERT IGNORE INTO credential (cred_name, cred_template_id, holder_id, added_by, tag_id, status, date_added, tenant_id)
-                VALUES ('${credential.cred_name}', '${credential.cred_template_id}', '${credential.holder_id}', '${credential.added_by}', '${credential.tag_id}', '${credential.status ?? "pending"}', '${credential.date_added}', '${credential.tenant_id}')
+                INSERT IGNORE INTO credential (cred_name, cred_template_id, holder_id, added_by, tag_id, status, valid_from, valid_until, date_added, tenant_id)
+                VALUES (
+                    '${credential.cred_name}', 
+                    '${credential.cred_template_id}', 
+                    '${credential.holder_id}', 
+                    '${credential.added_by}', 
+                    '${credential.tag_id}', 
+                    '${credential.status}', 
+                    ${credential.valid_from ? "'" + credential.valid_from + "'" : 'NULL'}, 
+                    ${credential.valid_until ? "'" + credential.valid_until + "'" : 'NULL'}, 
+                    '${credential.date_added}', 
+                    '${credential.tenant_id}')
                 `)
             )
         )
