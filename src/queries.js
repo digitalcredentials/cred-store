@@ -164,7 +164,6 @@ export const getCredential = async id => {
     delete credential.tag_description
 
     return {credential, holder, tenant, template, tag}
-    
 }
 
 export const addBatch = async batch => {
@@ -173,8 +172,8 @@ export const addBatch = async batch => {
     conn = await pool.getConnection();
     await conn.beginTransaction();
    
-    await addHolders(conn, batch.holders);
-    await addCredentials(conn, batch.credentials);
+    await addBatchRecord(conn, batch);
+    await addCredentials(conn, batch);
     
     await conn.commit();
      console.log("Transaction successful!");
@@ -186,6 +185,13 @@ export const addBatch = async batch => {
   } finally {
     if (conn) return conn.release();
   }
+}
+
+export const getHolderIDsForEmails = async emailList => {
+    const emailsAsStrings = emailList.map(email=>`'${email}'`).join(',')
+    const query = `SELECT email, id FROM holder WHERE email IN (${emailsAsStrings})`;
+    const result = await pool.query(query);
+    return result
 }
 
 export const checkForHolderDuplicates = async emailList => {
@@ -202,10 +208,14 @@ export const addHolders = async data => {
     return result;
 }
 
-export const addCredentials = async credentials => {
-     // TODO, this is a batch so will need to add the batch info, ie., batch description (category???), templateId, csv file.
-    const queryValues = credentials.map(credential=>`(${credential.cred_name},${credential.holder_id},${credential.cred_template_id},${credential.tenant_id},${credential.status},${credential.tag_id},${credential.valid_from},${credential.valid_until},${credential.added_by})`).join(',')
+export const addCredentials = async batch => {
+    const queryValues = batch.credentials.map(credential=>`(${batch.batch_name},${credential.holder_id},${batch.cred_template_id},${batch.tenant_id},${batch.status},${batch.tag_id},${batch.valid_from},${batch.valid_until},${batch.added_by})`).join(',')
     const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, status, tag_id, valid_from, valid_until, added_by) values  ${queryValues}`);
+     return result;
+}
+
+export const addBatchRecord = async batch => {
+    const result = await pool.query(`insert into batch (name, description, uploaded_csv, template_id, tenant_id, status, tag_id, valid_from, valid_until, added_by) values (?,?,?,?,?,?,?,?,?,?)`, [batch.batch_name, batch.description, batch.csv, batch.template_id, batch.tenant_id, batch.status, batch.tag_id, batch.valid_from, batch.valid_until, batch.added_by]);
      return result;
 }
 
@@ -421,8 +431,11 @@ export const getReportData = async () => {
         pool.query("SELECT COUNT(*) AS total_templates FROM template"),
         pool.query("SELECT COUNT(*) AS total_batches FROM batch"),
         pool.query("SELECT status, COUNT(*) AS count FROM credential GROUP BY status;"),
-        pool.query("SELECT YEAR(date_added) AS year, MONTH(date_added) AS month, COUNT(*) AS count FROM credential GROUP BY year, month ORDER BY year, month;")
+        pool.query("SELECT YEAR(date_added) AS year, MONTH(date_added) AS month, COUNT(*) AS count FROM credential GROUP BY year, month ORDER BY year, month;"),
+         pool.query("SELECT COUNT(*) AS total_collected FROM pickup"),
+        pool.query("SELECT COUNT(*) AS total_notified FROM notification")
     ]);
+
     const totalCredentials = result[0][0].total_credentials.toString();
     const totalTemplates = result[1][0].total_templates.toString();
     const totalBatches = result[2][0].total_batches.toString();
@@ -430,7 +443,9 @@ export const getReportData = async () => {
         (accumulator, statusObject) => {accumulator[statusObject.status] = convertToNumber(statusObject.count); return accumulator},
         {});
     const byMonth = result[4].map(row=>{row.count = convertToNumber(row.count); return row})
-    return {totalCredentials, totalBatches, totalTemplates, byStatus, byMonth};
+    const totalCollected = result[5][0].total_collected.toString();
+    const totalNotified = result[6][0].total_notified.toString();
+    return {totalCredentials, totalBatches, totalTemplates, byStatus, byMonth, totalCollected, totalNotified};
 }
 
 
