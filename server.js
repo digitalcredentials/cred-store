@@ -4,7 +4,7 @@ import http from 'http'
 import fs from 'fs'
 
 const run = async () => {
-  const port = 3000;
+  const port = 4008;
   const enableHttpsForDev = false;
 
   const app = await build()
