@@ -145,6 +145,11 @@ async function addTables(conn) {
                 uploaded_csv BLOB,
                 description VARCHAR(255),
                 template_id UUID NOT NULL,
+                tenant_id UUID NOT NULL,
+                status ENUM('hidden','collectable') NOT NULL DEFAULT 'collectable',
+                tag_id UUID,
+                valid_from DATE DEFAULT NULL,
+                valid_until DATE DEFAULT NULL,
                 date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
                 added_by VARCHAR(100),
                 PRIMARY KEY (id)

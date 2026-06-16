@@ -357,9 +357,9 @@ const credentials = [
 ];
 
 const batches = [
-  { name: 'Spring2026', description: '1st batch for spring convocation', uploaded_csv: 'csv data', added_by: 'chartraj@mit.edu' },
-  { name: 'Spring2025', description: '1st batch for spring convocation', uploaded_csv: 'csv data', added_by: 'chartraj@mit.edu' },
-  { name: 'Fall2025', description: '1st batch for fall convocation', uploaded_csv: 'csv data', added_by: 'chartraj@mit.edu' }
+  { name: 'Spring2026', description: '1st batch for spring convocation', uploaded_csv: 'csv data', added_by: 'chartraj@mit.edu', template_id: templates[0].id, tenant_id: tenants[0].id, status: 'pending', tag_id: tags[0].id, valid_from: '2020-03-08', valid_until: '2026-09-09' },
+  { name: 'Spring2025', description: '1st batch for spring convocation', uploaded_csv: 'csv data', added_by: 'chartraj@mit.edu', template_id: templates[0].id, tenant_id: tenants[0].id, status: 'pending', tag_id: tags[0].id, valid_from: '2020-03-08', valid_until: '2028-03-09' },
+  { name: 'Fall2025', description: '1st batch for fall convocation', uploaded_csv: 'csv data', added_by: 'chartraj@mit.edu', template_id: templates[1].id, tenant_id: tenants[0].id, status: 'pending', tag_id: tags[1].id, valid_from: '2020-03-08', valid_until: '2027-03-09' },
 ];
 
 export { credentials, batches, tags, templates, holders, tenants };
