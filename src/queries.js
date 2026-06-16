@@ -208,18 +208,18 @@ export const addHolders = async data => {
     return result;
 }
 
-export const addCredentials = async batch => {
-    const queryValues = batch.credentials.map(credential=>`(${batch.batch_name},${credential.holder_id},${batch.cred_template_id},${batch.tenant_id},${batch.status},${batch.tag_id},${batch.valid_from},${batch.valid_until},${batch.added_by})`).join(',')
-    const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, status, tag_id, valid_from, valid_until, added_by) values  ${queryValues}`);
+export const addCredentials = async (conn, batch) => {
+    const queryValues = batch.credentials.map(credential=>`('${batch.batch_name}','${credential.holder_id}','${batch.template_id}','${batch.tenant_id}','${batch.status}','${batch.tag_id}',${batch.valid_from ? "'" + batch.valid_from + "'" : 'NULL'}, ${batch.valid_until ? "'" + batch.valid_until + "'" : 'NULL'}, '${batch.added_by}')`).join(',')
+    const result = await conn.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, status, tag_id, valid_from, valid_until, added_by) values  ${queryValues}`);
      return result;
 }
 
-export const addBatchRecord = async batch => {
-    const result = await pool.query(`insert into batch (name, description, uploaded_csv, template_id, tenant_id, status, tag_id, valid_from, valid_until, added_by) values (?,?,?,?,?,?,?,?,?,?)`, [batch.batch_name, batch.description, batch.csv, batch.template_id, batch.tenant_id, batch.status, batch.tag_id, batch.valid_from, batch.valid_until, batch.added_by]);
+export const addBatchRecord = async (conn, batch) => {
+    const result = await conn.query(`insert into batch (name, description, uploaded_csv, template_id, tenant_id, status, tag_id, valid_from, valid_until, added_by) values (?,?,?,?,?,?,?,?,?,?)`, [batch.batch_name, batch.description, batch.csv, batch.template_id, batch.tenant_id, batch.status, batch.tag_id, batch.valid_from, batch.valid_until, batch.added_by]);
      return result;
 }
 
-export const addCredential = async credential => {
+export const addCredential = async (credential) => {
     const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, status, tag_id, valid_from, valid_until, added_by) values (?,?,?,?,?,?,?,?,?)`, [credential.cred_name, credential.holder_id, credential.cred_template_id, credential.tenant_id, credential.status, credential.tag_id, credential.valid_from, credential.valid_until, credential.added_by]);
      return result;
 }
