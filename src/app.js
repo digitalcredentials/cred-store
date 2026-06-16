@@ -23,6 +23,7 @@ import {
     fetchCredentialsForHolder,
     fetchCredentialCountForHolder,
     checkForHolderDuplicates,
+    getHolderIDsForEmails,
     addPickup,
     addNotification,
     lookupPickupToken,
@@ -133,6 +134,16 @@ export async function build() {
     let query = req.body;
         try {
             const result = await fetchHolders(query.queryTerm, query.currentPage);
+        res.json(result);
+        } catch (err) {
+            throw err;
+        }
+    })
+
+    app.post('/holders/ids', async function (req, res) {
+    let emails = req.body;
+        try {
+            const result = await getHolderIDsForEmails(emails);
         res.json(result);
         } catch (err) {
             throw err;
