@@ -134,11 +134,10 @@ const templates = [
 		]
 	},
 	{
-		id: 32,
-		template_json: 'the VC itself',
+		id: '3958dc9e-742f-4377-85e9-fec4e6a6442b',
+		template_json: testVC,
 		name: "Bachelors Degree",
 		description: "a longer description of the bachelors",
-    added_by: 'jc.chartrand@gmail.com',
 		fields: [ 
 			{
 				id: 'specialization',
@@ -164,21 +163,21 @@ const templates = [
     template_json: testVC,
     name: 'Bachelor of Science',
     description: 'Standard Bachelor of Science',
-    added_by: 'jc.chartrand@gmail.com'
+		fields: []
   },
   {
     id: 'CC27C14A-0ACF-4F4A-A6C9-D45682C144B9',
     template_json: testVC,
     name: 'Bachelor of Arts',
     description: 'Standard Bachelor of Arts',
-    added_by: 'jc.chartrand@gmail.com'
+		fields: []
   },
   {
     id: '13D07535-C59E-4157-A011-F8D2EF4E0CBB',
     template_json: testVC,
     name: 'Master of Science',
     description: 'Standard Master of Science',
-    added_by: 'jc.chartrand@gmail.com'
+		fields: []
   }
 ];
 
