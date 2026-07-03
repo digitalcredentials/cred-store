@@ -15,6 +15,7 @@ import {
     fetchAllTemplates, 
     getTemplate,
     fetchHolders,
+    fetchAllHolders,
     fetchHolderCount,
     getHolder,
     addHolder,
@@ -368,6 +369,15 @@ export async function build() {
   app.get('/tenants', async function (req, res) {
         try {
             const result = await fetchAllTenants();
+            res.send(result);
+        } catch (err) {
+            throw err;
+        }
+  })
+
+    app.get('/holders', async function (req, res) {
+        try {
+            const result = await fetchAllHolders();
             res.send(result);
         } catch (err) {
             throw err;
