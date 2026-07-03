@@ -16,6 +16,10 @@ export const fetchAllTenants = async () => {
     return await pool.query(`select * from tenant`);
 }
 
+export const fetchAllHolders = async () => {
+    return await pool.query(`select * from holder`);
+}
+
 const ITEMS_PER_PAGE = 6;
 
 export const fetchTemplates = async (queryTerm) => {
