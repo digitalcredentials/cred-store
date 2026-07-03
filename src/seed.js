@@ -80,7 +80,7 @@ async function addTables(conn) {
                 name VARCHAR(100) NOT NULL,
                 template_json JSON NOT NULL,
                 description VARCHAR(255),
-                image_url VARCHAR(255) NOT NULL,
+                fields JSON,
                 PRIMARY KEY (id)
             );
         `)
@@ -221,8 +221,8 @@ async function seedTables(conn) {
 
          const insertedTemplates = await Promise.all(
             templates.map(template => conn.query(`
-                INSERT IGNORE INTO template (id, name, description, template_json, image_url)
-                VALUES ('${template.id}', '${template.name}', '${template.description}', '${template.template_json}', '${template.image_url}')
+                INSERT IGNORE INTO template (id, name, description, template_json, fields)
+                VALUES ('${template.id}', '${template.name}', '${template.description}', '${template.template_json}', '${JSON.stringify(template.fields)}')
                 `)
             )
         )
