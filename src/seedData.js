@@ -124,15 +124,46 @@ const templates = [
     template_json: testVC,
     name: 'Bachelor of Engineering',
     description: 'Standard Bachelor of Engineering',
-    image_url: '/customers/evil-rabbit.png',
-    added_by: 'jc.chartrand@gmail.com'
-  },
+		fields: [ 
+			{
+				id: 'specialization',
+        type: 'string',
+				pathIntoVC: 'credentialSubject.name',
+				displayName: 'Specialization'
+			}
+		]
+	},
+	{
+		id: 32,
+		template_json: 'the VC itself',
+		name: "Bachelors Degree",
+		description: "a longer description of the bachelors",
+    added_by: 'jc.chartrand@gmail.com',
+		fields: [ 
+			{
+				id: 'specialization',
+        type: 'string',
+				pathIntoVC: 'credentialSubject.name',
+				displayName: 'Specialization'
+			},
+			{
+				id: 'degree',
+				type: 'select',
+				pathIntoVC: 'credentialSubject.achievement.achievementType',
+				displayName: 'Degree Type',
+				allowedValues: [ 
+					{value: 'Bachelor of Arts', display: 'Bachelor of Arts'},
+					{value: 'Bachelor of Science', display: 'Bachelor of Science'},
+					{value: 'Bachelor of Engineering', display: 'Bachelor of Engineering'}
+				]
+			}
+		]
+	},
   {
     id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
     template_json: testVC,
     name: 'Bachelor of Science',
     description: 'Standard Bachelor of Science',
-    image_url: '/customers/evil-rabbit.png',
     added_by: 'jc.chartrand@gmail.com'
   },
   {
@@ -140,7 +171,6 @@ const templates = [
     template_json: testVC,
     name: 'Bachelor of Arts',
     description: 'Standard Bachelor of Arts',
-    image_url: '/customers/evil-rabbit.png',
     added_by: 'jc.chartrand@gmail.com'
   },
   {
@@ -148,7 +178,6 @@ const templates = [
     template_json: testVC,
     name: 'Master of Science',
     description: 'Standard Master of Science',
-    image_url: '/customers/evil-rabbit.png',
     added_by: 'jc.chartrand@gmail.com'
   }
 ];
