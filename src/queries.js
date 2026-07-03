@@ -54,7 +54,7 @@ const commonCredQuery = `SELECT
         template.template_json as template_json,
         template.name as template_name,
         template.description as template_description,
-        template.image_url as template_image_url,
+        template.fields as template_fields,
         tag.id as tag_id,
         tag.name as tag_name,
         tag.description as tag_description
@@ -135,7 +135,7 @@ export const getCredential = async id => {
         template_json: credential.template_json,
         name: credential.template_name,
         description: credential.template_description,
-        image_url: credential.template_image_url
+        fields: credential.template_fields
     }
 
     const tag = {
