@@ -224,13 +224,14 @@ export const addBatchRecord = async (conn, batch) => {
 }
 
 export const addCredential = async (credential) => {
-    const result = await pool.query(`insert into credential (cred_name, holder_id, cred_template_id, tenant_id, status, tag_id, valid_from, valid_until, added_by) values (?,?,?,?,?,?,?,?,?)`, [credential.cred_name, credential.holder_id, credential.cred_template_id, credential.tenant_id, credential.status, credential.tag_id, credential.valid_from, credential.valid_until, credential.added_by]);
+    const result = await pool.query(`insert into credential (cred_name, verifiable_credential, holder_id, cred_template_id, tenant_id, status, tag_id, valid_from, valid_until, added_by) values (?,?,?,?,?,?,?,?,?,?)`, [credential.cred_name, credential.verifiable_credential, credential.holder_id, credential.cred_template_id, credential.tenant_id, credential.status, credential.tag_id, credential.valid_from, credential.valid_until, credential.added_by]);
      return result;
 }
 
 export const updateCredential = async (id, credential) => {
     const result = await pool.query(`UPDATE credential
         SET cred_name = ?, 
+        verifiable_credential = ?,
         holder_id = ?,
         cred_template_id = ?,
         tenant_id = ?,
@@ -238,12 +239,12 @@ export const updateCredential = async (id, credential) => {
         tag_id = ?,
         valid_from = ?,
         valid_until = ?
-        WHERE id = ?`, [credential.cred_name, credential.holder_id, credential.cred_template_id, credential.tenant_id, credential.status, credential.tag_id, credential.valid_from, credential.valid_until ,id]);
+        WHERE id = ?`, [credential.cred_name, credential.verifiable_credential, credential.holder_id, credential.cred_template_id, credential.tenant_id, credential.status, credential.tag_id, credential.valid_from, credential.valid_until ,id]);
     return result;
 }
 
 export const updateCredentials = async (values) => {
-    const credentialIdList = values.cred_ids.split(',').map(credId=>`'${credId}'`).join()
+    const credentialIdList = values.cred_ids.split(',').map(credId=>`'${credId}'`).join(',')
     const result = await pool.query(`UPDATE credential
         SET status = ?,
         cred_template_id = ?,
